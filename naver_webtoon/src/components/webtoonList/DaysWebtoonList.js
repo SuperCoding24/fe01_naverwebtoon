@@ -1,23 +1,48 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const DaysWebtoonList = () => {
+  const [filteredWebtoons, setFiltereWebtoons] = useState([]);
   const daysOfWeek = ["월", "화", "수", "목", "금", "토", "일"];
-  const perPage = 200;
+  const perPage = 700;
   const api = "https://korea-webtoon-api.herokuapp.com";
 
-  const listItems = async () => {
-    const res = await fetch(`${api}?service=naver&perPage=${perPage}`);
-    const data = await res.json();
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`${api}?service=naver&perPage=${perPage}`);
+      const data = await res.json();
 
-    const filteredWebtoons = data.webtoons.filter(
-      webtoon =>
-        !webtoon.updateDays.includes("finished") &&
-        !webtoon.updateDays.includes("naverDaily")
-    );
+      const filteredWebtoons = data.webtoons.filter(
+        webtoon =>
+          !webtoon.updateDays.includes("finished") &&
+          !webtoon.updateDays.includes("naverDaily")
+      );
 
-    console.log(filteredWebtoons);
+      setFiltereWebtoons(filteredWebtoons);
+    };
+    fetchData();
+  }, []);
+
+  const getUpdateDay = day => {
+    switch (day) {
+      case "월":
+        return "mon";
+      case "화":
+        return "tue";
+      case "수":
+        return "wed";
+      case "목":
+        return "thu";
+      case "금":
+        return "fri";
+      case "토":
+        return "sat";
+      case "일":
+        return "sun";
+      default:
+        return "";
+    }
   };
-  listItems();
 
   return (
     <ListContainer>
@@ -26,10 +51,16 @@ const DaysWebtoonList = () => {
         {daysOfWeek.map((day, index) => (
           <ListItems key={index}>
             <Days>{day}요웹툰</Days>
-            <ItemBox>
-              <Image></Image>
-              <WebtoonTitle>웹툰 제목</WebtoonTitle>
-            </ItemBox>
+            {filteredWebtoons
+              .filter(webtoon => webtoon.updateDays[0] === getUpdateDay(day))
+              .map(webtoon => {
+                return (
+                  <ItemBox key={webtoon.webtoonId}>
+                    <Image src={webtoon.img}></Image>
+                    <WebtoonTitle>{webtoon.title}</WebtoonTitle>
+                  </ItemBox>
+                );
+              })}
           </ListItems>
         ))}
       </ListWrapper>
@@ -49,8 +80,7 @@ const Title = styled.div`
 
 const ListWrapper = styled.div`
   width: 1150px;
-  /* height: fit-content; */
-  height: 100vh;
+  height: fit-content;
   display: flex;
   margin-top: 20px;
   border: 1px solid #ebebeb;
@@ -82,7 +112,7 @@ const ItemBox = styled.div`
   margin: 10px 0 25px 0;
 `;
 
-const Image = styled.div`
+const Image = styled.img`
   width: 95%;
   height: 200px;
   margin-bottom: 13px;
