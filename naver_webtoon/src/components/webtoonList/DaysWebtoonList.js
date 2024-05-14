@@ -112,6 +112,7 @@ const ItemBox = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 10px 0 25px 0;
+  cursor: pointer;
 `;
 
 const Image = styled.img`
@@ -123,7 +124,12 @@ const Image = styled.img`
 `;
 
 const WebtoonTitle = styled.div`
+  width: 100%;
   margin-right: auto;
   margin-left: 5px;
-  font-weight: 500;
+  font-weight: 700;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
 `;
