@@ -2,6 +2,22 @@ import styled from "styled-components";
 
 const DaysWebtoonList = () => {
   const daysOfWeek = ["월", "화", "수", "목", "금", "토", "일"];
+  const perPage = 200;
+  const api = "https://korea-webtoon-api.herokuapp.com";
+
+  const listItems = async () => {
+    const res = await fetch(`${api}?service=naver&perPage=${perPage}`);
+    const data = await res.json();
+
+    const filteredWebtoons = data.webtoons.filter(
+      webtoon =>
+        !webtoon.updateDays.includes("finished") &&
+        !webtoon.updateDays.includes("naverDaily")
+    );
+
+    console.log(filteredWebtoons);
+  };
+  listItems();
 
   return (
     <ListContainer>
