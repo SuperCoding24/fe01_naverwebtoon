@@ -5,11 +5,13 @@ const DaysWebtoonList = () => {
   const [filteredWebtoons, setFiltereWebtoons] = useState([]);
   const daysOfWeek = ["월", "화", "수", "목", "금", "토", "일"];
   const perPage = 700;
-  const api = "https://korea-webtoon-api.herokuapp.com";
+  // const api = "https://korea-webtoon-api.herokuapp.com";
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`${api}?service=naver&perPage=${perPage}`);
+      const res = await fetch(
+        `${process.env.REACT_APP_API}?service=naver&perPage=${perPage}`
+      );
       const data = await res.json();
 
       const filteredWebtoons = data.webtoons.filter(
