@@ -1,7 +1,14 @@
 import "./App.css";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 
 function App() {
-  return <>테스트</>;
+  return (
+    <>
+      <Login />
+      <Home />
+    </>
+  );
 }
 
 export default App;
