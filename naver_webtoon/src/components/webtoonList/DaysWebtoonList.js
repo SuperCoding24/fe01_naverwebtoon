@@ -5,8 +5,17 @@ import WebtoonFiltered from "./WebtoonFiltered";
 
 const DaysWebtoonList = () => {
   const [filteredWebtoons, setFiltereWebtoons] = useState([]);
+  const [currentDay, setCurrentDay] = useState("");
+
   const daysOfWeek = ["월", "화", "수", "목", "금", "토", "일"];
   const perPage = 700;
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const week = ["일", "월", "화", "수", "목", "금", "토"];
+    const currentDayIndex = currentDate.getDay(); // 0 (일요일)부터 6 (토요일)까지
+    setCurrentDay(week[currentDayIndex]);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,8 +64,10 @@ const DaysWebtoonList = () => {
       </Header>
       <ListWrapper>
         {daysOfWeek.map((day, index) => (
-          <ListItems key={index}>
-            <Days>{day}요웹툰</Days>
+          <ListItems key={index} day={day} $currentDay={currentDay}>
+            <Days day={day} currentDay={currentDay}>
+              {day}요웹툰
+            </Days>
             {filteredWebtoons
               .filter(webtoon => webtoon.updateDays[0] === getUpdateDay(day))
               .map(webtoon => {
@@ -102,6 +113,8 @@ const ListItems = styled.div`
   width: 15%;
   height: 100%;
   border-right: 1px solid #ebebeb;
+  background-color: ${props =>
+    props.day === props.currentDay ? "#DAF8E1" : "white"};
   &:last-child {
     border: none;
   }
@@ -115,6 +128,9 @@ const Days = styled.div`
   padding: 13px 0;
   font-size: 15px;
   font-weight: bold;
+  color: ${props => (props.day === props.currentDay ? "white" : "")};
+  background-color: ${props =>
+    props.day === props.currentDay ? "#00DC64" : "white"};
 `;
 
 const ItemBox = styled.div`
