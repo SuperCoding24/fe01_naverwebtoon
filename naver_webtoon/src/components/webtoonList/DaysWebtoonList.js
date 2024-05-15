@@ -64,7 +64,7 @@ const DaysWebtoonList = () => {
       </Header>
       <ListWrapper>
         {daysOfWeek.map((day, index) => (
-          <ListItems key={index} day={day} $currentDay={currentDay}>
+          <ListItems key={index} day={day} currentDay={currentDay}>
             <Days day={day} currentDay={currentDay}>
               {day}요웹툰
             </Days>
@@ -73,7 +73,9 @@ const DaysWebtoonList = () => {
               .map(webtoon => {
                 return (
                   <ItemBox key={webtoon.webtoonId}>
-                    <Image src={webtoon.img}></Image>
+                    <ImageBox>
+                      <Image src={webtoon.img}></Image>
+                    </ImageBox>
                     <WebtoonTitle>{webtoon.title}</WebtoonTitle>
                   </ItemBox>
                 );
@@ -115,9 +117,6 @@ const ListItems = styled.div`
   border-right: 1px solid #ebebeb;
   background-color: ${props =>
     props.day === props.currentDay ? "#DAF8E1" : "white"};
-  &:last-child {
-    border: none;
-  }
 `;
 
 const Days = styled.div`
@@ -141,12 +140,24 @@ const ItemBox = styled.div`
   cursor: pointer;
 `;
 
-const Image = styled.img`
+const ImageBox = styled.div`
   width: 95%;
   height: 200px;
   margin-bottom: 13px;
   border-radius: 4px;
-  background-color: aliceblue;
+  overflow: hidden;
+`;
+
+const Image = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition-duration: 0.3s;
+  &:hover {
+    transform: scale(1.05, 1.05);
+    transition-duration: 0.5s;
+  }
 `;
 
 const WebtoonTitle = styled.div`
@@ -158,4 +169,7 @@ const WebtoonTitle = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   word-break: break-all;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
