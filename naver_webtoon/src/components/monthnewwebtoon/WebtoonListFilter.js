@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const WebtoonListContainer = styled.div`
@@ -7,13 +7,13 @@ const WebtoonListContainer = styled.div`
 `;
 
 const BoxContainer = styled.div`
-  width: 272px;
+  width: 275px;
   border: none;
   margin-bottom: 20px;
-  margin-right: 12px;
+  margin-right: 17px;
 `;
 
-const TitleLink = styled.div`
+const TitleLink = styled.a`
   text-decoration: none;
   padding: 0;
   background-color: transparent;
@@ -27,30 +27,21 @@ const TitleLink = styled.div`
   word-break: break-word;
 `;
 
-const AuthorLink = styled.div`
+const AuthorLink = styled.a`
   font-size: 13px;
   line-height: 20px;
   font-weight: 500;
   color: #1a1a1a;
   text-decoration: none;
   padding: 0;
-  color: inherit;
-  background-color: transparent;
-  border: none;
   cursor: pointer;
 `;
 
-const DescriptionText = styled.div`
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 20px;
-  color: #929292;
-`;
-
 const WebtoonImage = styled.img`
-  width: 272px;
-  height: 165px;
+  width: 275px;
+  height: 350px;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 const TruncateText = ({ text, maxLength }) => {
@@ -61,57 +52,87 @@ const TruncateText = ({ text, maxLength }) => {
 };
 
 const WebtoonListFilter = () => {
-  const webtoons = [
-    {
-      id: 1,
-      title: "웹툰 제목입니다아아아아아아아아아",
-      author: "작가 이름입니다ㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
-      description: "웹툰에 대한 간략한 설명이 여기에 들어갑니다.",
-      imageSrc: "이미지 URL 주소를 여기에 입력",
-    },
-    {
-      id: 2,
-      title: "웹툰 제목입니다아아아아아아아아아",
-      author: "작가 이름입니다ㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
-      description: "웹툰에 대한 간략한 설명이 여기에 들어갑니다.",
-      imageSrc: "이미지 URL 주소를 여기에 입력",
-    },
-    {
-      id: 3,
-      title: "웹툰 제목입니다아아아아아아아아아",
-      author: "작가 이름입니다ㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
-      description: "웹툰에 대한 간략한 설명이 여기에 들어갑니다.",
-      imageSrc: "이미지 URL 주소를 여기에 입력",
-    },
-    // 추가 웹툰 데이터...
-  ];
+  const [webtoons, setWebtoons] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleButtonClick = (webtoonId) => {
-    console.log(`클릭된 웹툰 ID: ${webtoonId}`);
+  useEffect(() => {
+    const fetchWebtoons = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API}?service=naver&perPage=3000`
+        );
+        if (!response.ok) {
+          throw new Error("네트워크 응답이 실패했습니다");
+        }
+        const data = await response.json();
+
+        // 받아온 웹툰 데이터 중에서 신규 작품만 필터링하여 선택
+        const newWebtoons = data.webtoons.filter(
+          (webtoon) => webtoon.additional && webtoon.additional.new === true
+        );
+
+        // 무작위로 섞은 후 최신 신규 웹툰 중에서 처음 4개 선택
+        const shuffledNewWebtoons = shuffleArray(newWebtoons);
+        const latestNewWebtoons = shuffledNewWebtoons.slice(0, 4);
+
+        setWebtoons(latestNewWebtoons);
+        setLoading(false); // 로딩 상태 변경
+        console.log("로드된 신규 웹툰 목록:", latestNewWebtoons);
+      } catch (error) {
+        console.error("웹툰 데이터를 불러오는 중 오류 발생:", error);
+        setLoading(false); // 에러 발생 시 로딩 상태 변경
+      }
+    };
+
+    fetchWebtoons();
+  }, []); // 컴포넌트가 처음 마운트될 때 한 번만 실행합니다.
+
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
   };
 
   return (
     <WebtoonListContainer>
-      {webtoons.map((webtoon) => (
-        <BoxContainer key={webtoon.id}>
-          <div>
-            <WebtoonImage src={webtoon.imageSrc} alt="이미지" />
-          </div>
-          <div>
-            <TitleLink onClick={() => handleButtonClick(webtoon.id)}>
-              <TruncateText text={webtoon.title} maxLength={19} />
-            </TitleLink>
-          </div>
-          <div>
-            <AuthorLink onClick={() => handleButtonClick(webtoon.id)}>
-              <TruncateText text={webtoon.author} maxLength={15} />
-            </AuthorLink>
-          </div>
-          <DescriptionText>
-            <TruncateText text={webtoon.description} maxLength={39} />
-          </DescriptionText>
-        </BoxContainer>
-      ))}
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        webtoons.map((webtoon) => (
+          <BoxContainer key={webtoon._id}>
+            <div>
+              <TitleLink>
+                <WebtoonImage
+                  src={webtoon.img}
+                  alt="웹툰 이미지"
+                  onClick={() => window.open(webtoon.url, "_blank")}
+                />
+              </TitleLink>
+            </div>
+            <div>
+              <TitleLink
+                href={webtoon.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TruncateText text={webtoon.title} maxLength={19} />
+              </TitleLink>
+            </div>
+            <div>
+              <AuthorLink
+                href={webtoon.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TruncateText text={webtoon.author} maxLength={15} />
+              </AuthorLink>
+            </div>
+          </BoxContainer>
+        ))
+      )}
     </WebtoonListContainer>
   );
 };

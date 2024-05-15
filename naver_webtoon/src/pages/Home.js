@@ -1,8 +1,9 @@
 // UI
 import Layout from "../UI/Layout";
+
 // components
+import MonthNewWebtoonUI from "../components/MonthNewWebtoon/MonthNewWebtoonUI";
 import DaysWebtoonList from "../components/webtoonList/DaysWebtoonList";
-import MonthNewWebtoonUI from "../components/monthnewwebtoon/MonthNewWebtoonUI";
 import WeekWebtoon from "../components/webtoonList/WeekWebtoon";
 
 const Home = () => {
