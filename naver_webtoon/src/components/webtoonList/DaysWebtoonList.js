@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+// components
+import WebtoonFiltered from "./WebtoonFiltered";
 
 const DaysWebtoonList = () => {
   const [filteredWebtoons, setFiltereWebtoons] = useState([]);
   const daysOfWeek = ["월", "화", "수", "목", "금", "토", "일"];
   const perPage = 700;
-  // const api = "https://korea-webtoon-api.herokuapp.com";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +49,10 @@ const DaysWebtoonList = () => {
 
   return (
     <ListContainer>
-      <Title>요일별 전체 웹툰</Title>
+      <Header>
+        <Title>요일별 전체 웹툰</Title>
+        <WebtoonFiltered />
+      </Header>
       <ListWrapper>
         {daysOfWeek.map((day, index) => (
           <ListItems key={index}>
@@ -74,8 +78,14 @@ export default DaysWebtoonList;
 
 const ListContainer = styled.div``;
 
-const Title = styled.div`
+const Header = styled.div`
+  display: flex;
+  align-items: center;
   margin-top: 500px;
+`;
+
+const Title = styled.div`
+  margin-right: 20px;
   font-size: 20px;
   font-weight: bolder;
 `;
