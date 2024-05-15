@@ -118,7 +118,7 @@ const WebtoonListFilter = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <TruncateText text={webtoon.title} maxLength={19} />
+                <TruncateText text={webtoon.title} maxLength={25} />
               </TitleLink>
             </div>
             <div>
