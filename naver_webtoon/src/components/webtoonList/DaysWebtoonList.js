@@ -76,7 +76,11 @@ const DaysWebtoonList = () => {
                     <ImageBox>
                       <Image src={webtoon.img}></Image>
                     </ImageBox>
-                    <WebtoonTitle>{webtoon.title}</WebtoonTitle>
+                    <TitleBox>
+                      {day === currentDay ? <Upload>UP</Upload> : ""}
+
+                      <WebtoonTitle>{webtoon.title}</WebtoonTitle>
+                    </TitleBox>
                   </ItemBox>
                 );
               })}
@@ -160,10 +164,25 @@ const Image = styled.img`
   }
 `;
 
-const WebtoonTitle = styled.div`
-  width: 100%;
+const TitleBox = styled.div`
+  display: flex;
+  align-items: center;
   margin-right: auto;
   margin-left: 5px;
+`;
+
+const Upload = styled.div`
+  padding: 1.5px;
+  margin-right: 4px;
+  font-size: 8px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid red;
+  border-radius: 2px;
+`;
+
+const WebtoonTitle = styled.div`
+  width: 100%;
   font-weight: 700;
   overflow: hidden;
   white-space: nowrap;
