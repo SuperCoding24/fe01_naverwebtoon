@@ -1,7 +1,14 @@
 import React from "react";
+import WebtoonHeader from "../webtoonHeader/WebtoonHeader"
+import WebtoonCategoryHeader from "../webtoonHeader/WebtoonCategoryHeader";
+import WebtoonDayHeader from "../webtoonHeader/WebtoonDayHeader";
 
 const WeekWebtoon = () => {
-  return <div>WeekWebtoon</div>;
+  return <div>WeekWebtoon
+    <WebtooonHeader/>
+    <WebtoonCategoryHeader/>
+    <WebtoonDayHeader/>
+  </div>;
 };
 
 export default WeekWebtoon;
