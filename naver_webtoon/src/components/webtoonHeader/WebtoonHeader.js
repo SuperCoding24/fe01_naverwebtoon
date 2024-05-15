@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { FaSearch } from "react-icons/fa";
 
 const WebtoonHeader = () => {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ const WebtoonHeader = () => {
             </WrapperLeft>
             <WrapperRight>
                 <SearchInput type="text" placeholder="제목/작가로 검색할 수 있습니다."/>
+                <button><FaSearch className="customSearchIcon" size={24} /></button>
             </WrapperRight>
         </Wrapper>
     );
@@ -57,16 +59,23 @@ const WrapperRight = styled.div`
     display: flex;
     width: 18vw;
     hegith: 10vh;
-    justify-content: space-around;
+    justify-content: flex-end;
+    align-items: center;
     margin-left: 18vw;
     margin-bottom: 2px;
+    position: relative;
 `;
 
 const SearchInput = styled.input`
     display: inline-block;
     font-size: 10px;
-    width: 200px;
+    width: 400px;
     height: 28px;
-    margin-top: 10px;
+    margin-top: 2px;
     margin-left: 50px;
+    padding-left: 25px; 
+`;
+
+const searchButton = styled.button`
+    margin-top: 4px;
 `;
