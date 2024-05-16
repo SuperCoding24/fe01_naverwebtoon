@@ -2,36 +2,49 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 //components
-import WebtoonAside from "./WebtoonAside";
+// import WebtoonAside from "./WebtoonAside";
+import { useLocation } from "react-router-dom";
 
-const WebtoonSearchList = ({ searchWebtoons }) => {
+const WebtoonSearchList = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const keyword = queryParams.get("keyword");
+
   const [selectedOption, setSelectedOption] = useState(0);
   const [filteredWebtoons, setFilteredWebtoons] = useState([]);
+  const [searchWebtoons, setSearchWebtoons] = useState([]);
 
-  const handleOptionClick = index => {
+  const handleOptionClick = (index) => {
     setSelectedOption(index);
   };
 
   useEffect(() => {
+    console.log(keyword);
     const fetchData = async () => {
       try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API}/search?keyword=${keyword}`
+        );
+        const data = await response.json();
+        const searchWebtoons = data.webtoons;
         //연재여부 필터
         const filteredWebtoons = searchWebtoons.filter(
-          webtoon => !webtoon.updateDays.includes("finished")
+          (webtoon) => !webtoon.updateDays.includes("finished")
         );
 
         setFilteredWebtoons(filteredWebtoons);
+        setSearchWebtoons(searchWebtoons);
       } catch (error) {
         console.error("Error fetching data", error);
       }
     };
     fetchData();
-  }, [searchWebtoons]);
+  }, [keyword]);
 
   return (
     <Container>
       <SearchKeywordArea>
-        <SearchKeyword>갓오브하이스쿨</SearchKeyword> 에 대한 검색결과입니다.
+        <SearchKeyword>{keyword}</SearchKeyword> 에 대한 검색결과입니다.
       </SearchKeywordArea>
       <TabControl>
         <Tab
@@ -80,18 +93,21 @@ const WebtoonSearchList = ({ searchWebtoons }) => {
 
       <ContentWrap>
         <Content>
-          <ContentHeader>
-            <TabName>웹툰</TabName>
-            <ResultCount>총 {searchWebtoons.length}</ResultCount>
-            {/* 
-            <ContentMore>웹툰 더보기 &#62;</ContentMore> */}
-          </ContentHeader>
+          <ContentHeadArea>
+            <ContentHeader>
+              <TabName>웹툰</TabName>
+              <ResultCount>총 {searchWebtoons.length}</ResultCount>
+            </ContentHeader>
+            <ContentMore src="">웹툰 더보기 &#62;</ContentMore>
+          </ContentHeadArea>
           <Result>
             <ResultList>
-              {searchWebtoons.map(webtoon => (
+              {searchWebtoons.map((webtoon) => (
                 <ResultItemBox key={webtoon._id}>
                   <>
-                    <Image src={webtoon.img} alt={webtoon.title}></Image>
+                    <ImageBox>
+                      <Image src={webtoon.img} alt={webtoon.title}></Image>
+                    </ImageBox>
                     <ResultItemInfo>
                       <Title>{webtoon.title}</Title>
                       <WebtoonInfo>
@@ -127,7 +143,7 @@ const WebtoonSearchList = ({ searchWebtoons }) => {
             </ResultList>
           </Result>
         </Content>
-        <WebtoonAside />
+        {/* <WebtoonAside /> */}
       </ContentWrap>
     </Container>
   );
@@ -166,7 +182,7 @@ const TabControl = styled.div`
 
 const Tab = styled.div`
   display: flex;
-  color: ${props => (props.isSelected ? "#00DC64" : "#000000")};
+  color: ${(props) => (props.isSelected ? "#00DC64" : "#000000")};
   margin-right: 20px;
   align-items: center;
   background-color: rgba(0, 0, 0, 0);
@@ -190,15 +206,24 @@ const Content = styled.div`
   width: 840px;
 `;
 
-// const ContentHeadArea = styled.div`
-//   display:flex;
-//   align-items:center;
-// `
+const ContentHeadArea = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(235, 235, 235);
+`;
 
 const ContentHeader = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgb(235, 235, 235);
+`;
+
+const ContentMore = styled.a`
+  align-items: center;
+  color: rgb(102, 102, 102);
+  display: flex;
+  font-size: 15px;
+  margin-left: 5px;
 `;
 
 const Result = styled.div``;
@@ -216,12 +241,24 @@ const ResultItemBox = styled.li`
   height: 156px;
 `;
 
-const Image = styled.img`
-  background-size: contain;
-  border-radius: 4px;
+const ImageBox = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  width: 120px;
+  height: 156px;
+  overflow: hidden;
+`;
+
+const Image = styled.img`
+  cursor: pointer;
   height: 100%;
-  width: 118px;
+  width: 100%;
+  transform: scale(1);
+  transition-duration: 0.3s;
+  &:hover {
+    transform: scale(1.05, 1.05);
+    transition-duration: 0.5s;
+  }
 `;
 
 const ResultItemInfo = styled.div``;

@@ -5,18 +5,20 @@ import { useNavigate } from "react-router-dom";
 const WebtoonCategoryHeader = () => {
     const navigate = useNavigate();
 
-    const webtoonMenuActive = (e) => {
+    const webtoonMenuActive = () => {
       navigate("/webtoon");
-    }
+    };
 
     return (
         <Wrapper>
             <WebtoonCategoryHeaderWrapperLeft>
-                <HomeMenu >홈</HomeMenu>
-                <WebtoonMenu onClick={webtoonMenuActive}>웹툰</WebtoonMenu>
-                <BestMenu >베스트도전</BestMenu>
-                <ComicsMenu >도전만화</ComicsMenu>
-                <MyPageMenu >마이페이지</MyPageMenu>
+                <WebtoonCategoryHeaderUl>
+                    <HomeMenu>홈</HomeMenu>
+                    <WebtoonMenu className="WebtoonMenu" onClick={webtoonMenuActive}>웹툰</WebtoonMenu>
+                    <WebtoonCategoryHeaderLi>베스트도전</WebtoonCategoryHeaderLi>
+                    <WebtoonCategoryHeaderLi>도전만화</WebtoonCategoryHeaderLi>
+                    <WebtoonCategoryHeaderLi>마이페이지</WebtoonCategoryHeaderLi>
+                </WebtoonCategoryHeaderUl>
             </WebtoonCategoryHeaderWrapperLeft>
             <WebtoonCategoryHeaderWrapperRight>
                 <WebtoonCategoryHeaderCreatorsButton>CREATOR'S</WebtoonCategoryHeaderCreatorsButton>
@@ -47,23 +49,46 @@ const WebtoonCategoryHeaderWrapperLeft = styled.div`
     font-size: 17px;
 `;
 
-const HomeMenu = styled.div`
+const WebtoonCategoryHeaderUl = styled.ul`
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    gap: 2px; 
+       
+`;
+
+const WebtoonCategoryHeaderLi = styled.li`
+    width: 7vw;
+    height: 11vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 `;
-const WebtoonMenu = styled.div`
+
+const HomeMenu = styled.li`
+    margin-left: -64px;
+    width: 6vw;
+    height: 11vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+`;
+
+const WebtoonMenu = styled.li`
+    margin-right: 30px;
+    width: 6vw;
+    height: 11vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     background-color: #00DC64; 
     color: white;
-    heigth: 4vh;
-`;
-const BestMenu = styled.div`
-    cursor: pointer;
-`;
-const ComicsMenu = styled.div`
-    cursor: pointer;
-`;
-const MyPageMenu = styled.div`
-    cursor: pointer;
 `;
 
 const WebtoonCategoryHeaderWrapperRight = styled.div`
@@ -79,6 +104,9 @@ const WebtoonCategoryHeaderCreatorsButton = styled.button`
     height: 4vh;
     margin-top: 4px;
     background-color: #00DC64;
-    border: 1px solid #dbdbd5;
-    margin-left: 11px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    margin-left: 15px;
+    cursor: pointer;
 `;

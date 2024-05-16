@@ -14,6 +14,7 @@ const WebtoonFiltered = ({ setWebtoons }) => {
         );
         const data = await res.json();
         let sortedWebtoons = [];
+
         switch (selectedFilter) {
           case "popular":
             sortedWebtoons = data.webtoons
@@ -51,7 +52,19 @@ const WebtoonFiltered = ({ setWebtoons }) => {
           default:
             sortedWebtoons = data.webtoons;
         }
-        console.log("Sorted webtoons:", sortedWebtoons); // 콘솔로그로 sortedWebtoons 출력
+
+        // Sort rest (휴재) true values to the bottom
+        sortedWebtoons.sort((a, b) => {
+          if (a.additional.rest === true && b.additional.rest === false) {
+            return 1;
+          }
+          if (a.additional.rest === false && b.additional.rest === true) {
+            return -1;
+          }
+          return 0;
+        });
+
+        console.log("Sorted webtoons:", sortedWebtoons);
         setWebtoons(sortedWebtoons);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -78,28 +91,19 @@ const WebtoonFiltered = ({ setWebtoons }) => {
           onClick={() => handleOptionClick("popular")}
           selected={selectedFilter === "popular"}
         >
-          인기순{" "}
-          {selectedFilter === "popular" && (
-            <Arrow selected={selectedFilter === "popular"} order={sortOrder} />
-          )}
+          인기순 <MiddleDot>&bull;</MiddleDot>
         </Option>
         <Option
           onClick={() => handleOptionClick("update")}
           selected={selectedFilter === "update"}
         >
-          최신업로드{" "}
-          {selectedFilter === "update" && (
-            <Arrow selected={selectedFilter === "update"} />
-          )}
+          최신업로드 <MiddleDot>&bull;</MiddleDot>
         </Option>
         <Option
           onClick={() => handleOptionClick("rest")}
           selected={selectedFilter === "rest"}
         >
-          휴재{" "}
-          {selectedFilter === "rest" && (
-            <Arrow selected={selectedFilter === "rest"} />
-          )}
+          휴재
         </Option>
       </OptionWrapper>
     </FilteredWrapper>
@@ -132,15 +136,7 @@ const Option = styled.div`
   }
 `;
 
-const Arrow = styled.div`
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 8px solid ${(props) => (props.selected ? "#00dc64" : "#666")}; /* 화살표 색상 */
-  margin-left: 3px; /* 화살표 여백 */
-  transform: ${(props) =>
-    props.selected && props.order === "desc"
-      ? "rotate(180deg)"
-      : "none"}; /* 내림차순일 때 화살표 뒤집기 */
+const MiddleDot = styled.span`
+  color: #b2b2b2;
+  margin-left: 8px;
 `;

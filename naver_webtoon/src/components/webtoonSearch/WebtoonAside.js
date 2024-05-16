@@ -106,7 +106,7 @@ const AsideListItem = styled.li`
   text-align: left;
 `;
 
-const PosterLink = styled.image`
+const PosterLink = styled.img`
   display: block;
   text-align: left;
   text-decoration: none, solid, rgb(0, 0, 0);

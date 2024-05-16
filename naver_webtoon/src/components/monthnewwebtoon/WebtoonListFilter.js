@@ -38,7 +38,7 @@ const AuthorLink = styled.a`
 `;
 
 const WebtoonImage = styled.img`
-  width: 275px;
+  width: 304px;
   height: 350px;
   object-fit: cover;
   cursor: pointer;

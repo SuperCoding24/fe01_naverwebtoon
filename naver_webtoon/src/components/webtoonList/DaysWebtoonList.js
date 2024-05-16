@@ -55,7 +55,11 @@ const DaysWebtoonList = () => {
                 return (
                   <ItemBox key={webtoon.webtoonId}>
                     <ImageBox>
-                      <Image src={webtoon.img}></Image>
+                      <Image
+                        src={webtoon.img}
+                        alt="웹툰 이미지"
+                        onClick={() => window.open(webtoon.url, "_blank")}
+                      ></Image>
                     </ImageBox>
                     <TitleBox>
                       {day === currentDay ? <Upload>UP</Upload> : ""}
@@ -98,7 +102,7 @@ const ListWrapper = styled.div`
 const ListItems = styled.div`
   width: 14.2%;
   border-right: ${props => props.theme.borderColor};
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.day === props.currentDay ? "#DAF8E1" : ""};
   &:last-child {
     border: none;

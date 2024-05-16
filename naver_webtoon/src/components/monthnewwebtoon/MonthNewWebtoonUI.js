@@ -16,7 +16,7 @@ const Header = styled.div`
 `;
 
 const Webtoonbox = styled.div`
-  width: 1168px;
+  width: 1180px;
   height: 331px;
   padding-top: 15px;
 `;
@@ -37,7 +37,6 @@ const MoreWatch = styled.div`
   font-weight: 500;
   color: #666;
   cursor: pointer;
-  padding-right: 12px;
 `;
 
 const MoreWatchImage = styled.img`
