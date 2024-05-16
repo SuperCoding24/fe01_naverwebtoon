@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import { FaRegCircleUser } from "react-icons/fa6";
+import { FaRegCommentDots } from "react-icons/fa6";
+import { FaEnvelope } from "react-icons/fa6";
+import { FaBars } from "react-icons/fa";
 import styled from "styled-components";
 
 const WebtoonHeader = () => {
@@ -55,11 +59,19 @@ const WebtoonHeader = () => {
                 <Webtoon onClick={webtoon}>웹툰</Webtoon>
             </WrapperLeft>
             <WrapperRight>
-                <form onSubmit={submit}>
+                <FormWrapper onSubmit={submit}>
                     <SearchInput type="search" placeholder="제목/작가로 검색할 수 있습니다." value={keyword} onChange={getValue} onKeyPress={onSubmitSearch}/>
-                    <button><FaSearch className="customSearchIcon" size={14} /></button>
-                </form>
+                    <SubmitButton><FaSearch className="customSearchIcon" size={6} /></SubmitButton>
+                </FormWrapper>
+                <IconWrapper>
+                    <FaRegCircleUser size={24} />
+                    <FaRegCommentDots size={24} />
+                    <FaEnvelope size={24}/>
+                    <FaBars size={24}/>                    
+                </IconWrapper>
+                
             </WrapperRight>
+            
         </Wrapper>
     );
 };
@@ -96,21 +108,45 @@ const Webtoon = styled.div`
 `;
 
 const WrapperRight = styled.div`
+    position: relative;
     display: flex;
-    width: 20vw;
+    width: 24vw;
     hegith: 10vh;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    margin-left: 18vw;
+    margin-left: 9vw;
     margin-bottom: 2px;
 `;
 
 const SearchInput = styled.input`
-    display: inline-block;
-    font-size: 10px;
-    width: 200px;
+    width: 400px;
+    font-size: 6px;
     height: 28px;
-    margin-top: 2px;
-    margin-left: 50px;
-    padding-left: 25px; 
+    margin-top: 26px;
+    margin-left: 58px;
+    border: 1px solid black;   
+`;
+
+const IconWrapper = styled.div`
+    margin-top: 38px;
+    display: flex;
+    gap: 14px;
+    width: 10vw;
+    height: 6vh;
+`;
+
+const FormWrapper = styled.form`
+    display: flex;
+    width: 12vw;
+    hegith: 4vh;
+`;
+
+const SubmitButton = styled.button`
+    width: 9px;
+    height: 18px;
+    background: none;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+
 `;
