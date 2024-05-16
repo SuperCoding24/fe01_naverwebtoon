@@ -68,7 +68,7 @@ const WebtoonHeader = () => {
             onKeyPress={onSubmitSearch}
           />
           <button>
-            <FaSearch className="customSearchIcon" size={14} />
+            <FaSearch className="customSearchIcon" size={10} />
           </button>
         </FormWrapper>
         <IconWrapper>
@@ -125,12 +125,12 @@ const WrapperRight = styled.div`
 `;
 
 const SearchInput = styled.input`
-    width: 400px;
+    width: 600px;
     font-size: 6px;
     height: 28px;
     margin-top: 26px;
     margin-left: 58px;
-    border: 1px solid black;   
+    border: 1px solid gray;   
 `;
 
 const IconWrapper = styled.div`
@@ -152,12 +152,13 @@ const FormWrapper = styled.form`
         border: none;
         padding: 0 15px;
         height: 40px;
+        width: 20vw;
     }
 
     button {
         position: absolute;
         margin-top: 32px;
-        margin-left: 154px;
+        margin-left: 143px;
         background: none;
         border: none;
     }

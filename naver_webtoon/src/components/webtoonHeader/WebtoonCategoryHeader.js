@@ -108,4 +108,5 @@ const WebtoonCategoryHeaderCreatorsButton = styled.button`
     border-radius: 4px;
     color: white;
     margin-left: 15px;
+    cursor: pointer;
 `;
