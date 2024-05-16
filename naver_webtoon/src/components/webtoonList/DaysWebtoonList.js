@@ -15,7 +15,7 @@ const DaysWebtoonList = () => {
   }, []);
 
   // getUpdateDay 함수 추가
-  const getUpdateDay = (day) => {
+  const getUpdateDay = day => {
     switch (day) {
       case "월":
         return "mon";
@@ -50,8 +50,8 @@ const DaysWebtoonList = () => {
               {day}요웹툰
             </Days>
             {filteredWebtoons
-              .filter((webtoon) => webtoon.updateDays[0] === getUpdateDay(day))
-              .map((webtoon) => {
+              .filter(webtoon => webtoon.updateDays[0] === getUpdateDay(day))
+              .map(webtoon => {
                 return (
                   <ItemBox key={webtoon.webtoonId}>
                     <ImageBox>
@@ -82,7 +82,7 @@ const ListContainer = styled.div``;
 const Header = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 500px;
+  margin-top: 200px;
 `;
 
 const Title = styled.div`
@@ -96,12 +96,12 @@ const ListWrapper = styled.div`
   height: fit-content;
   display: flex;
   margin-top: 20px;
-  border: 1px solid #ebebeb;
+  border: ${props => props.theme.borderColor};
 `;
 
 const ListItems = styled.div`
   width: 14.2%;
-  border-right: 1px solid #ebebeb;
+  border-right: ${props => props.theme.borderColor};
   background-color: ${(props) =>
     props.day === props.currentDay ? "#DAF8E1" : ""};
   &:last-child {
@@ -117,9 +117,9 @@ const Days = styled.div`
   padding: 13px 0;
   font-size: 15px;
   font-weight: bold;
-  color: ${(props) => (props.day === props.currentDay ? "white" : "")};
-  background-color: ${(props) =>
-    props.day === props.currentDay ? "#00DC64" : "white"};
+  color: ${props => (props.day === props.currentDay ? "white" : "")};
+  background-color: ${props =>
+    props.day === props.currentDay ? "#00DC64" : ""};
 `;
 
 const ItemBox = styled.div`

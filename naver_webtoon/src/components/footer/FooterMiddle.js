@@ -65,9 +65,12 @@ const Image = styled.img`
 `;
 
 const Text = styled.div`
+  margin-bottom: 10px;
   font-size: 23px;
   font-weight: 600;
+  color: ${props => (props.theme === "light" ? "white" : "black")};
   &.sub {
+    margin-bottom: 0;
     color: #00dc64;
   }
 `;

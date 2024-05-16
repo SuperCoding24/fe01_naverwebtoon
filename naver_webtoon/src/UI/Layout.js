@@ -1,11 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import Toggle from "./Toggle";
+import { useTheme } from "../context/themeProvider";
 
 const Layout = ({ children }) => {
+  const [ThemeMode, toggleTheme] = useTheme();
   return (
-    <Container>
-      <Wrapper>{children}</Wrapper>
-    </Container>
+    <>
+      <Container>
+        <Wrapper>{children}</Wrapper>
+      </Container>
+      <Toggle toggle={toggleTheme} mode={ThemeMode}>
+        DarkMode
+      </Toggle>
+    </>
   );
 };
 
