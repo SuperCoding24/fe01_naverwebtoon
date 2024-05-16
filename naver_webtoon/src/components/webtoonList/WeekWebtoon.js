@@ -7,25 +7,19 @@ import WebtoonDayHeader from "../webtoonHeader/WebtoonDayHeader";
 
 const WeekWebtoon = () => {
   return (
-    <div>
-        <WebtoonHeader />
-        <FirstBorder></FirstBorder>
-        <WebtoonCategoryHeader />
-        <FirstBorder></FirstBorder>
-        <WebtoonDayHeader />
-        <LastBorder></LastBorder>
-    </div>
+    <Container>
+      <WebtoonHeader />
+      <WebtoonCategoryHeader />
+      <WebtoonDayHeader />
+    </Container>
   );
 };
 
 export default WeekWebtoon;
 
-const FirstBorder = styled.div`
-    border-top: solid 1px #ebebeb;
-    margin-top: 17px;
-`;
-
-const LastBorder = styled.div`
-    border-top: solid 1px #ebebeb;
-    margin-top: 1px;
+const Container = styled.div`
+  width: 100vw;
+  /* height: 100vh; */
+  /* display: flex; */
+  justify-content: center;
 `;
