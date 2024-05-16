@@ -16,7 +16,7 @@ const Header = styled.div`
 `;
 
 const Webtoonbox = styled.div`
-  width: 1180px;
+  width: 1197px;
   height: 331px;
   padding-top: 15px;
 `;
@@ -43,6 +43,7 @@ const MoreWatchImage = styled.img`
   padding-bottom: 2px;
   width: 18px;
   height: 18px;
+  margin-right: 12px;
 `;
 
 const MonthNewWebtoonUI = () => {
