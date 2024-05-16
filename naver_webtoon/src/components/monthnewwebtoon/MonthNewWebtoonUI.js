@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import WebtoonListFilter from "./WebtoonListFilter";
-import arrowSvg from "./asset/arrow.svg";
-import WebtoonApi from "../monthnewwebtoon/WebtoonApi";
+import arrowSvg from "../../asset/arrow.svg";
 
 const Header = styled.div`
   display: flex;
@@ -17,7 +16,7 @@ const Header = styled.div`
 `;
 
 const Webtoonbox = styled.div`
-  width: 840px;
+  width: 1168px;
   height: 331px;
   padding-top: 15px;
 `;
@@ -38,6 +37,7 @@ const MoreWatch = styled.div`
   font-weight: 500;
   color: #666;
   cursor: pointer;
+  padding-right: 12px;
 `;
 
 const MoreWatchImage = styled.img`
@@ -53,7 +53,6 @@ const MonthNewWebtoonUI = () => {
 
   return (
     <Webtoonbox>
-      <WebtoonApi />
       <Header>
         <Title>이달의 신규웹툰</Title>
         <MoreWatch onClick={moreWatchButton}>
