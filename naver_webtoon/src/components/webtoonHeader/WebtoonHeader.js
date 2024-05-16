@@ -1,26 +1,64 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 
 const WebtoonHeader = () => {
     const navigate = useNavigate();
-    const login = () => {
-        navigate("/");
-    };
 
     const webtoon = () => {
         navigate("/webtoon");
     };
 
+    const [keyword, setKeyword] = useState('');
+
+    const getValue = (event) => {
+        console.log("검색어: " , event.target.value);
+        setKeyword(event.target.value);
+    };
+
+    const submit = (event) => {
+        event.preventDefault();
+        handleSearch();
+    };
+
+    const onSubmitSearch = (event) => {
+        if (event.key === "Enter") {
+            handleSearch()
+            console.log(event);
+        };
+    };
+
+    const handleSearch = () => {
+        const fetchWebtoons = async () => {
+            try {
+              const response = await fetch(
+                `${process.env.REACT_APP_API}/search?keyword=${keyword}`
+              );
+              const data = await response.json();
+              console.log("data", data);
+              console.log("data.webtoons: " , data.webtoons);
+
+              navigate("/search",  data.webtoons);
+            } catch (error) {
+                console.log(error);
+            }
+          };
+
+          fetchWebtoons();
+    };
+
     return (
         <Wrapper>
             <WrapperLeft>
-                <Naver>NAVER</Naver>
+                <NaverHeader>NAVER</NaverHeader>
                 <Webtoon onClick={webtoon}>웹툰</Webtoon>
             </WrapperLeft>
             <WrapperRight>
-                <SearchInput type="text" placeholder="제목/작가로 검색할 수 있습니다."/>
-                <LoginButton onClick={login}>로그인</LoginButton>
+                <form onSubmit={submit}>
+                    <SearchInput type="search" placeholder="제목/작가로 검색할 수 있습니다." value={keyword} onChange={getValue} onKeyPress={onSubmitSearch}/>
+                    <button><FaSearch className="customSearchIcon" size={14} /></button>
+                </form>
             </WrapperRight>
         </Wrapper>
     );
@@ -30,42 +68,41 @@ export default WebtoonHeader;
 
 const Wrapper = styled.div`
     display: flex;
-    width: 80vw;
+    width: 1150px;
     height: 6vh;
     justify-content: space-between;
 `;
 
 const WrapperLeft = styled.div`
     display: flex;
-    width: 8vw;
+    width: 40vw;
     justify-content: space-around;
 `;
 
-const Naver = styled.h1`
+const NaverHeader = styled.h1`
     font-color: black;
     font-size: 18px;
     margin-top: 20px;
     cursor: pointer;
-    margin-left: -20px;
 `;
 
 const Webtoon = styled.div`
-    font-color: black;
+    width: 1000px;
     font-size: 26px;
     font-weight: bold;
     margin-top: 14px;
-    margin-left: -20px;
+    margin-left: 20px;
     cursor: pointer;
-
 `;
-
 
 const WrapperRight = styled.div`
     display: flex;
-    width: 18vw;
+    width: 20vw;
     hegith: 10vh;
     justify-content: space-around;
-    margin-right: 18vw;
+    align-items: center;
+    margin-left: 18vw;
+    margin-bottom: 2px;
 `;
 
 const SearchInput = styled.input`
@@ -73,13 +110,7 @@ const SearchInput = styled.input`
     font-size: 10px;
     width: 200px;
     height: 28px;
-    margin-top: 20px;
-`;
-
-const LoginButton = styled.button`
-    border: 1px solid gray;
-    background-color: white;
-    cursor: pointer;
-    height: 22px;
-    margin-top: 24px;
+    margin-top: 2px;
+    margin-left: 50px;
+    padding-left: 25px; 
 `;
