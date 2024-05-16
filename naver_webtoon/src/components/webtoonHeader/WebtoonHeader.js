@@ -61,7 +61,7 @@ const WebtoonHeader = () => {
             <WrapperRight>
                 <FormWrapper onSubmit={submit}>
                     <SearchInput type="search" placeholder="제목/작가로 검색할 수 있습니다." value={keyword} onChange={getValue} onKeyPress={onSubmitSearch}/>
-                    <SubmitButton><FaSearch className="customSearchIcon" size={6} /></SubmitButton>
+                    <button><FaSearch className="customSearchIcon" size={6} /></button>
                 </FormWrapper>
                 <IconWrapper>
                     <FaRegCircleUser size={24} />
@@ -69,9 +69,7 @@ const WebtoonHeader = () => {
                     <FaEnvelope size={24}/>
                     <FaBars size={24}/>                    
                 </IconWrapper>
-                
             </WrapperRight>
-            
         </Wrapper>
     );
 };
@@ -128,7 +126,7 @@ const SearchInput = styled.input`
 `;
 
 const IconWrapper = styled.div`
-    margin-top: 38px;
+    margin-top: 42px;
     display: flex;
     gap: 14px;
     width: 10vw;
@@ -136,17 +134,25 @@ const IconWrapper = styled.div`
 `;
 
 const FormWrapper = styled.form`
+    position: relative;
+    
     display: flex;
     width: 12vw;
     hegith: 4vh;
+
+    SearchInput {
+        border: none;
+        padding: 0 15px;
+        height: 40px;
+    }
+
+    button {
+        position: absolute;
+        margin-top: 30px;
+        margin-left: 158px;
+        background: none;
+        border: none;
+    }
+
 `;
 
-const SubmitButton = styled.button`
-    width: 9px;
-    height: 18px;
-    background: none;
-    border: none;
-    margin-top: 10px;
-    cursor: pointer;
-
-`;
