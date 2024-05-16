@@ -38,7 +38,7 @@ const WebtoonHeader = () => {
               const data = await response.json();
               console.log("data", data);
               console.log("data.webtoons: " , data.webtoons);
-            
+
               navigate("/search",  data.webtoons);
             } catch (error) {
                 console.log(error);
