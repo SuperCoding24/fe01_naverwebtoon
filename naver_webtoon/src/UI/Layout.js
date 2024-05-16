@@ -19,6 +19,6 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 1150px;
+  width: 1180px;
   height: 100%;
 `;
