@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
@@ -10,6 +10,38 @@ const WebtoonHeader = () => {
         navigate("/webtoon");
     };
 
+    const [keyword, setKeyword] = useState('');
+
+    const getValue = (event) => {
+        console.log("검색어: " , event.target.value);
+        setKeyword(event.target.value);
+    };
+
+    const onSubmitSearch = (event) => {
+        if (event.key === "Enter") {
+            handleSearch()
+            console.log(event);
+        };
+    };
+
+    const handleSearch = () => {
+        const fetchWebtoons = async () => {
+            try {
+              const response = await fetch(
+                `${process.env.REACT_APP_API}/search?keyword=${keyword}`
+              );
+              const data = await response.json();
+              console.log("data", data);
+              console.log("data.webtoons: " , data.webtoons);
+              navigate("/search",  data.webtoons);
+            } catch (error) {
+                console.log(error);
+            }
+          };
+
+          fetchWebtoons();
+    };
+
     return (
         <Wrapper>
             <WrapperLeft>
@@ -17,7 +49,7 @@ const WebtoonHeader = () => {
                 <Webtoon onClick={webtoon}>웹툰</Webtoon>
             </WrapperLeft>
             <WrapperRight>
-                <SearchInput type="text" placeholder="제목/작가로 검색할 수 있습니다."/>
+                <SearchInput type="search" placeholder="제목/작가로 검색할 수 있습니다." value={keyword} onChange={getValue} onKeyPress={onSubmitSearch}/>
                 <button><FaSearch className="customSearchIcon" size={24} /></button>
             </WrapperRight>
         </Wrapper>
