@@ -96,13 +96,12 @@ const Webtoon = styled.div`
 
 const WrapperRight = styled.div`
     display: flex;
-    width: 18vw;
+    width: 20vw;
     hegith: 10vh;
     justify-content: space-around;
     align-items: center;
     margin-left: 18vw;
     margin-bottom: 2px;
-    position: relative;
 `;
 
 const SearchInput = styled.input`
