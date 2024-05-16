@@ -1,24 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const WebtoonCategoryHeader = () => {
+  const [selectedOption, setSelectedOption] = useState(1);
   const navigate = useNavigate();
+
+  const handleOptionClick = index => {
+    setSelectedOption(index);
+  };
 
   const webtoonMenuActive = () => {
     navigate("/");
+    handleOptionClick(1);
   };
 
   return (
     <Wrapper>
       <WebtoonCategoryHeaderWrapperLeft>
-        <Menu>홈</Menu>
-        <Menu className="webtoon" onClick={webtoonMenuActive}>
+        <Menu
+          onClick={() => handleOptionClick(0)}
+          isSelected={selectedOption === 0}
+        >
+          홈
+        </Menu>
+        <Menu onClick={webtoonMenuActive} isSelected={selectedOption === 1}>
           웹툰
         </Menu>
-        <Menu>베스트도전</Menu>
-        <Menu>도전만화</Menu>
-        <Menu>마이페이지</Menu>
+        <Menu
+          onClick={() => handleOptionClick(2)}
+          isSelected={selectedOption === 2}
+        >
+          베스트도전
+        </Menu>
+        <Menu
+          onClick={() => handleOptionClick(3)}
+          isSelected={selectedOption === 3}
+        >
+          도전만화
+        </Menu>
+        <Menu
+          onClick={() => handleOptionClick(4)}
+          isSelected={selectedOption === 4}
+        >
+          마이페이지
+        </Menu>
       </WebtoonCategoryHeaderWrapperLeft>
       <WebtoonCategoryHeaderWrapperRight>
         <WebtoonCategoryHeaderCreatorsButton>
@@ -55,10 +81,13 @@ const Menu = styled.div`
   padding: 0 18px;
   cursor: pointer;
 
-  &.webtoon {
+  background-color: ${props => (props.isSelected ? "#00dc64" : "")};
+  color: ${props => (props.isSelected ? "white" : "")};
+
+  /* &.webtoon {
     color: white;
-    background-color: #00dc64;
-  }
+    background-color: #00dc64; */
+  /* } */
 `;
 
 const WebtoonCategoryHeaderWrapperRight = styled.div`
