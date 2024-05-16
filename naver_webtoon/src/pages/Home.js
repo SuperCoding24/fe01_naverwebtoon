@@ -4,6 +4,7 @@ import Layout from "../UI/Layout";
 import DaysWebtoonList from "../components/webtoonList/DaysWebtoonList";
 import MonthNewWebtoonUI from "../components/monthnewwebtoon/MonthNewWebtoonUI";
 import WeekWebtoon from "../components/webtoonList/WeekWebtoon";
+import Footer from "../components/footer/Footer";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <WeekWebtoon />
       <MonthNewWebtoonUI />
       <DaysWebtoonList />
+      <Footer />
     </Layout>
   );
 };
