@@ -10,6 +10,8 @@ const WebtoonListContainer = styled.div`
 const BoxContainer = styled.div`
   border: none;
   margin-bottom: 20px;
+  /* margin: 0 24px 20px 0; */
+  position: relative;
 `;
 
 const TitleLink = styled.a`
@@ -43,6 +45,27 @@ const WebtoonImage = styled.img`
   border: ${props => props.theme.borderColor};
   object-fit: cover;
   cursor: pointer;
+  border-radius: 5px;
+`;
+
+const NewIcon = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background-color: #00dc64;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #002110;
+  font-family: Pretendard, Helvetica, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", "돋움", Dotum,
+    sans-serif;
+  font-size: 12px;
+  font-weight: 1000;
+  margin: 7px 0 0 7px;
 `;
 
 const TruncateText = styled.div`
@@ -79,26 +102,24 @@ const WebtoonListFilter = () => {
         }
         const data = await response.json();
 
-        // 받아온 웹툰 데이터 중에서 신규 작품만 필터링하여 선택
         const newWebtoons = data.webtoons.filter(
           webtoon => webtoon.additional && webtoon.additional.new === true
         );
 
-        // 무작위로 섞은 후 최신 신규 웹툰 중에서 처음 4개 선택
         const shuffledNewWebtoons = shuffleArray(newWebtoons);
         const latestNewWebtoons = shuffledNewWebtoons.slice(0, 5);
 
         setWebtoons(latestNewWebtoons);
-        setLoading(false); // 로딩 상태 변경
+        setLoading(false);
         console.log("로드된 신규 웹툰 목록:", latestNewWebtoons);
       } catch (error) {
         console.error("웹툰 데이터를 불러오는 중 오류 발생:", error);
-        setLoading(false); // 에러 발생 시 로딩 상태 변경
+        setLoading(false);
       }
     };
 
     fetchWebtoons();
-  }, []); // 컴포넌트가 처음 마운트될 때 한 번만 실행합니다.
+  }, []);
 
   const shuffleArray = array => {
     const shuffled = [...array];
@@ -116,6 +137,7 @@ const WebtoonListFilter = () => {
       ) : (
         webtoons.map(webtoon => (
           <BoxContainer key={webtoon._id}>
+            <NewIcon>신작</NewIcon>
             <div>
               <TitleLink>
                 <WebtoonImage

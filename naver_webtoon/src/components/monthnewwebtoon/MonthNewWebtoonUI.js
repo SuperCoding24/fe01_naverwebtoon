@@ -40,6 +40,7 @@ const MoreWatchImage = styled.img`
   padding-bottom: 2px;
   width: 18px;
   height: 18px;
+  margin-right: 12px;
 `;
 
 const MonthNewWebtoonUI = () => {
