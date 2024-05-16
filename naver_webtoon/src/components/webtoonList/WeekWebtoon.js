@@ -6,7 +6,6 @@ import WebtoonDayHeader from "../webtoonHeader/WebtoonDayHeader";
 const WeekWebtoon = () => {
   return (
     <div>
-      WeekWebtoon
       <WebtoonHeader />
       <WebtoonCategoryHeader />
       <WebtoonDayHeader />

@@ -1,41 +1,21 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-// components
-import WebtoonFiltered from "./WebtoonFiltered";
+import WebtoonFiltered from "./WebtoonFiltered"; // WebtoonFiltered 컴포넌트 임포트
 
 const DaysWebtoonList = () => {
-  const [filteredWebtoons, setFiltereWebtoons] = useState([]);
   const [currentDay, setCurrentDay] = useState("");
-
-  const daysOfWeek = ["월", "화", "수", "목", "금", "토", "일"];
-  const perPage = 700;
+  const [filteredWebtoons, setFilteredWebtoons] = useState([]); // Define filteredWebtoons state
+  const daysOfWeek = ["월", "화", "수", "목", "금", "토", "일"]; // daysOfWeek 변수 정의
 
   useEffect(() => {
     const currentDate = new Date();
     const week = ["일", "월", "화", "수", "목", "금", "토"];
-    const currentDayIndex = currentDate.getDay(); // 0 (일요일)부터 6 (토요일)까지
+    const currentDayIndex = currentDate.getDay();
     setCurrentDay(week[currentDayIndex]);
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch(
-        `${process.env.REACT_APP_API}?service=naver&perPage=${perPage}`
-      );
-      const data = await res.json();
-
-      const filteredWebtoons = data.webtoons.filter(
-        webtoon =>
-          !webtoon.updateDays.includes("finished") &&
-          !webtoon.updateDays.includes("naverDaily")
-      );
-
-      setFiltereWebtoons(filteredWebtoons);
-    };
-    fetchData();
-  }, []);
-
-  const getUpdateDay = day => {
+  // getUpdateDay 함수 추가
+  const getUpdateDay = (day) => {
     switch (day) {
       case "월":
         return "mon";
@@ -60,21 +40,27 @@ const DaysWebtoonList = () => {
     <ListContainer>
       <Header>
         <Title>요일별 전체 웹툰</Title>
-        <WebtoonFiltered />
+        <WebtoonFiltered setWebtoons={setFilteredWebtoons} />{" "}
+        {/* setWebtoons prop 추가 */}
       </Header>
       <ListWrapper>
         {daysOfWeek.map((day, index) => (
-          <ListItems key={index} day={day} $currentDay={currentDay}>
+          <ListItems key={index} day={day} currentDay={currentDay}>
             <Days day={day} currentDay={currentDay}>
               {day}요웹툰
             </Days>
             {filteredWebtoons
-              .filter(webtoon => webtoon.updateDays[0] === getUpdateDay(day))
-              .map(webtoon => {
+              .filter((webtoon) => webtoon.updateDays[0] === getUpdateDay(day))
+              .map((webtoon) => {
                 return (
                   <ItemBox key={webtoon.webtoonId}>
-                    <Image src={webtoon.img}></Image>
-                    <WebtoonTitle>{webtoon.title}</WebtoonTitle>
+                    <ImageBox>
+                      <Image src={webtoon.img}></Image>
+                    </ImageBox>
+                    <TitleBox>
+                      {day === currentDay ? <Upload>UP</Upload> : ""}
+                      <WebtoonTitle>{webtoon.title}</WebtoonTitle>
+                    </TitleBox>
                   </ItemBox>
                 );
               })}
@@ -102,7 +88,7 @@ const Title = styled.div`
 `;
 
 const ListWrapper = styled.div`
-  width: 1150px;
+  width: 1180px;
   height: fit-content;
   display: flex;
   margin-top: 20px;
@@ -110,11 +96,10 @@ const ListWrapper = styled.div`
 `;
 
 const ListItems = styled.div`
-  width: 15%;
-  height: 100%;
+  width: 14.2%;
   border-right: 1px solid #ebebeb;
   background-color: ${props =>
-    props.day === props.currentDay ? "#DAF8E1" : "white"};
+    props.day === props.currentDay ? "#DAF8E1" : ""};
   &:last-child {
     border: none;
   }
@@ -128,8 +113,8 @@ const Days = styled.div`
   padding: 13px 0;
   font-size: 15px;
   font-weight: bold;
-  color: ${props => (props.day === props.currentDay ? "white" : "")};
-  background-color: ${props =>
+  color: ${(props) => (props.day === props.currentDay ? "white" : "")};
+  background-color: ${(props) =>
     props.day === props.currentDay ? "#00DC64" : "white"};
 `;
 
@@ -141,21 +126,51 @@ const ItemBox = styled.div`
   cursor: pointer;
 `;
 
-const Image = styled.img`
+const ImageBox = styled.div`
   width: 95%;
   height: 200px;
   margin-bottom: 13px;
   border-radius: 4px;
-  background-color: aliceblue;
+  overflow: hidden;
+`;
+
+const Image = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition-duration: 0.3s;
+  &:hover {
+    transform: scale(1.05, 1.05);
+    transition-duration: 0.5s;
+  }
+`;
+
+const TitleBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  margin-left: 5px;
+`;
+
+const Upload = styled.div`
+  padding: 1.5px;
+  margin-right: 4px;
+  font-size: 8px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid red;
+  border-radius: 2px;
 `;
 
 const WebtoonTitle = styled.div`
-  width: 100%;
-  margin-right: auto;
-  margin-left: 5px;
+  width: 170px;
   font-weight: 700;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   word-break: break-all;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
