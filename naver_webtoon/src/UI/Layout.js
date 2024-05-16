@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Toggle from "./Toggle";
 import { useTheme } from "../context/themeProvider";
-import WeekWebtoon from "../components/webtoonList/WeekWebtoon";
 
 const Layout = ({ children }) => {
   const [ThemeMode, toggleTheme] = useTheme();

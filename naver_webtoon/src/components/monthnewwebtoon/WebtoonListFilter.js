@@ -3,14 +3,13 @@ import styled from "styled-components";
 
 const WebtoonListContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   overflow-x: auto;
 `;
 
 const BoxContainer = styled.div`
-  width: 275px;
   border: none;
   margin-bottom: 20px;
-  margin-right: 17px;
 `;
 
 const TitleLink = styled.a`
@@ -38,18 +37,32 @@ const AuthorLink = styled.a`
 `;
 
 const WebtoonImage = styled.img`
-  width: 304px;
-  height: 350px;
+  margin-bottom: 5px;
+  height: 285px;
+  border-radius: 5px;
+  border: ${props => props.theme.borderColor};
   object-fit: cover;
   cursor: pointer;
 `;
 
-const TruncateText = ({ text, maxLength }) => {
-  if (text.length <= maxLength) {
-    return text;
+const TruncateText = styled.div`
+  font-size: 15px;
+  font-weight: bold;
+  color: ${props => props.theme.fontColor};
+
+  &.author {
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: 600;
   }
-  return text.slice(0, maxLength) + "...";
-};
+`;
+
+// const TruncateText = ({ text, maxLength }) => {
+//   if (text.length <= maxLength) {
+//     return text;
+//   }
+//   return text.slice(0, maxLength) + "...";
+// };
 
 const WebtoonListFilter = () => {
   const [webtoons, setWebtoons] = useState([]);
@@ -68,12 +81,12 @@ const WebtoonListFilter = () => {
 
         // 받아온 웹툰 데이터 중에서 신규 작품만 필터링하여 선택
         const newWebtoons = data.webtoons.filter(
-          (webtoon) => webtoon.additional && webtoon.additional.new === true
+          webtoon => webtoon.additional && webtoon.additional.new === true
         );
 
         // 무작위로 섞은 후 최신 신규 웹툰 중에서 처음 4개 선택
         const shuffledNewWebtoons = shuffleArray(newWebtoons);
-        const latestNewWebtoons = shuffledNewWebtoons.slice(0, 4);
+        const latestNewWebtoons = shuffledNewWebtoons.slice(0, 5);
 
         setWebtoons(latestNewWebtoons);
         setLoading(false); // 로딩 상태 변경
@@ -87,7 +100,7 @@ const WebtoonListFilter = () => {
     fetchWebtoons();
   }, []); // 컴포넌트가 처음 마운트될 때 한 번만 실행합니다.
 
-  const shuffleArray = (array) => {
+  const shuffleArray = array => {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -101,7 +114,7 @@ const WebtoonListFilter = () => {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        webtoons.map((webtoon) => (
+        webtoons.map(webtoon => (
           <BoxContainer key={webtoon._id}>
             <div>
               <TitleLink>
@@ -118,7 +131,7 @@ const WebtoonListFilter = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <TruncateText text={webtoon.title} maxLength={25} />
+                <TruncateText>{webtoon.title}</TruncateText>
               </TitleLink>
             </div>
             <div>
@@ -127,7 +140,7 @@ const WebtoonListFilter = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <TruncateText text={webtoon.author} maxLength={15} />
+                <TruncateText className="author">{webtoon.author}</TruncateText>
               </AuthorLink>
             </div>
           </BoxContainer>

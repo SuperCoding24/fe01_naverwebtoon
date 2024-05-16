@@ -23,10 +23,7 @@ const Webtoonbox = styled.div`
 
 const Title = styled.div`
   font-size: 20px;
-  line-height: 21px;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-  color: #000005;
+  font-weight: bolder;
 `;
 
 const MoreWatch = styled.div`
@@ -34,8 +31,8 @@ const MoreWatch = styled.div`
   align-items: center;
   font-size: 15px;
   line-height: 21px;
-  font-weight: 500;
-  color: #666;
+  font-weight: bold;
+  color: ${props => props.theme.boldGrayFontColor};
   cursor: pointer;
 `;
 
