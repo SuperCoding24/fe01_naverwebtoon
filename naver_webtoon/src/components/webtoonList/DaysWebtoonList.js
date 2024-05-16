@@ -78,7 +78,6 @@ const DaysWebtoonList = () => {
                     </ImageBox>
                     <TitleBox>
                       {day === currentDay ? <Upload>UP</Upload> : ""}
-
                       <WebtoonTitle>{webtoon.title}</WebtoonTitle>
                     </TitleBox>
                   </ItemBox>
@@ -108,7 +107,7 @@ const Title = styled.div`
 `;
 
 const ListWrapper = styled.div`
-  width: 1150px;
+  width: 1180px;
   height: fit-content;
   display: flex;
   margin-top: 20px;
@@ -116,11 +115,13 @@ const ListWrapper = styled.div`
 `;
 
 const ListItems = styled.div`
-  width: 15%;
-  height: 100%;
+  width: 14.2%;
   border-right: 1px solid #ebebeb;
   background-color: ${props =>
-    props.day === props.currentDay ? "#DAF8E1" : "white"};
+    props.day === props.currentDay ? "#DAF8E1" : ""};
+  &:last-child {
+    border: none;
+  }
 `;
 
 const Days = styled.div`
@@ -182,7 +183,7 @@ const Upload = styled.div`
 `;
 
 const WebtoonTitle = styled.div`
-  width: 100%;
+  width: 170px;
   font-weight: 700;
   overflow: hidden;
   white-space: nowrap;
