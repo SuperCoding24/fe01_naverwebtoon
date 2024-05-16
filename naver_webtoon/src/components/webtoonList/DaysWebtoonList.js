@@ -92,12 +92,12 @@ const ListWrapper = styled.div`
   height: fit-content;
   display: flex;
   margin-top: 20px;
-  border: 1px solid #ebebeb;
+  border: ${props => props.theme.borderColor};
 `;
 
 const ListItems = styled.div`
   width: 14.2%;
-  border-right: 1px solid #ebebeb;
+  border-right: ${props => props.theme.borderColor};
   background-color: ${props =>
     props.day === props.currentDay ? "#DAF8E1" : ""};
   &:last-child {
@@ -115,7 +115,7 @@ const Days = styled.div`
   font-weight: bold;
   color: ${props => (props.day === props.currentDay ? "white" : "")};
   background-color: ${props =>
-    props.day === props.currentDay ? "#00DC64" : "white"};
+    props.day === props.currentDay ? "#00DC64" : ""};
 `;
 
 const ItemBox = styled.div`

@@ -82,14 +82,14 @@ const BottomContainer = styled.div`
 const FooterTitleWrapper = styled.div`
   display: flex;
   padding-bottom: 20px;
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: ${props => props.theme.borderColor};
 `;
 
 const TitleBox = styled.div`
   display: flex;
   align-items: center;
   padding: 0 10px;
-  border-right: 1px solid #ebebeb;
+  border-right: ${props => props.theme.borderColor};
 
   &.first {
     padding-left: 0;
@@ -126,7 +126,7 @@ const SplitContent = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 3px;
-  border-right: 1px solid #ebebeb;
+  border-right: ${props => props.theme.borderColor};
 
   &.second {
     margin-left: 10px;
@@ -144,10 +144,10 @@ const TextBox = styled.div`
 
 const Text = styled.div`
   padding: 0 5px;
-  border-right: 1px solid #ebebeb;
+  border-right: ${props => props.theme.borderColor};
   font-size: 13px;
   font-weight: bold;
-  color: #7f7f7f;
+  color: ${props => props.theme.fontGrayColor};
 
   &:first-child {
     padding-left: 0;

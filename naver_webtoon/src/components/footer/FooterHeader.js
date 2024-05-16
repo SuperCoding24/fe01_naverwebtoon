@@ -103,7 +103,7 @@ const Title = styled.div`
   &.noticeTitle {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #ebebeb;
+    border-bottom: ${props => props.theme.borderColor};
   }
 `;
 
@@ -134,7 +134,7 @@ const ToSee = styled.div`
   display: flex;
   align-items: center;
   font-size: 16px;
-  color: #666666;
+  color: ${props => props.theme.fontGrayColor};
   cursor: pointer;
 `;
 
