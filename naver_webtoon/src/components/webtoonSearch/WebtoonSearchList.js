@@ -8,7 +8,7 @@ const WebtoonSearchList = ({ searchWebtoons }) => {
   const [selectedOption, setSelectedOption] = useState(0);
   const [filteredWebtoons, setFilteredWebtoons] = useState([]);
 
-  const handleOptionClick = (index) => {
+  const handleOptionClick = index => {
     setSelectedOption(index);
   };
 
@@ -17,7 +17,7 @@ const WebtoonSearchList = ({ searchWebtoons }) => {
       try {
         //연재여부 필터
         const filteredWebtoons = searchWebtoons.filter(
-          (webtoon) => !webtoon.updateDays.includes("finished")
+          webtoon => !webtoon.updateDays.includes("finished")
         );
 
         setFilteredWebtoons(filteredWebtoons);
@@ -88,7 +88,7 @@ const WebtoonSearchList = ({ searchWebtoons }) => {
           </ContentHeader>
           <Result>
             <ResultList>
-              {searchWebtoons.map((webtoon) => (
+              {searchWebtoons.map(webtoon => (
                 <ResultItemBox key={webtoon._id}>
                   <>
                     <Image src={webtoon.img} alt={webtoon.title}></Image>
@@ -166,7 +166,7 @@ const TabControl = styled.div`
 
 const Tab = styled.div`
   display: flex;
-  color: ${(props) => (props.isSelected ? "#00DC64" : "#000000")};
+  color: ${props => (props.isSelected ? "#00DC64" : "#000000")};
   margin-right: 20px;
   align-items: center;
   background-color: rgba(0, 0, 0, 0);
@@ -264,8 +264,8 @@ const Summary = styled.p`
   text-overflow: ellipsis;
   overflow-x: hidden;
   overflow-y: hidden;
-  margin-top:3px;
-  height:20px
+  margin-top: 3px;
+  height: 20px;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
 `;
