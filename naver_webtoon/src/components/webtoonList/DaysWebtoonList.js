@@ -15,7 +15,7 @@ const DaysWebtoonList = () => {
   }, []);
 
   // getUpdateDay 함수 추가
-  const getUpdateDay = (day) => {
+  const getUpdateDay = day => {
     switch (day) {
       case "월":
         return "mon";
@@ -50,8 +50,8 @@ const DaysWebtoonList = () => {
               {day}요웹툰
             </Days>
             {filteredWebtoons
-              .filter((webtoon) => webtoon.updateDays[0] === getUpdateDay(day))
-              .map((webtoon) => {
+              .filter(webtoon => webtoon.updateDays[0] === getUpdateDay(day))
+              .map(webtoon => {
                 return (
                   <ItemBox key={webtoon.webtoonId}>
                     <ImageBox>
@@ -78,7 +78,7 @@ const ListContainer = styled.div``;
 const Header = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 500px;
+  margin-top: 200px;
 `;
 
 const Title = styled.div`
@@ -113,8 +113,8 @@ const Days = styled.div`
   padding: 13px 0;
   font-size: 15px;
   font-weight: bold;
-  color: ${(props) => (props.day === props.currentDay ? "white" : "")};
-  background-color: ${(props) =>
+  color: ${props => (props.day === props.currentDay ? "white" : "")};
+  background-color: ${props =>
     props.day === props.currentDay ? "#00DC64" : "white"};
 `;
 
