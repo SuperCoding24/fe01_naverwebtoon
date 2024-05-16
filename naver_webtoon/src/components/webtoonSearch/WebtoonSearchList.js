@@ -104,7 +104,9 @@ const WebtoonSearchList = () => {
               {searchWebtoons.map((webtoon) => (
                 <ResultItemBox key={webtoon._id}>
                   <>
-                    <Image src={webtoon.img} alt={webtoon.title}></Image>
+                    <ImageBox>
+                      <Image src={webtoon.img} alt={webtoon.title}></Image>
+                    </ImageBox>
                     <ResultItemInfo>
                       <Title>{webtoon.title}</Title>
                       <WebtoonInfo>
@@ -229,12 +231,24 @@ const ResultItemBox = styled.li`
   height: 156px;
 `;
 
-const Image = styled.img`
-  background-size: contain;
-  border-radius: 4px;
+const ImageBox = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  width: 120px;
+  height: 156px;
+  overflow: hidden;
+`;
+
+const Image = styled.img`
+  cursor: pointer;
   height: 100%;
-  width: 118px;
+  width: 100%;
+  transform: scale(1);
+  transition-duration: 0.3s;
+  &:hover {
+    transform: scale(1.05, 1.05);
+    transition-duration: 0.5s;
+  }
 `;
 
 const ResultItemInfo = styled.div``;
