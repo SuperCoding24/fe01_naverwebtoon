@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 //components
-import WebtoonAside from "./WebtoonAside";
+// import WebtoonAside from "./WebtoonAside";
 import { useLocation } from "react-router-dom";
 
-const WebtoonSearchList = ({}) => {
+const WebtoonSearchList = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const keyword = queryParams.get("keyword");
 
   const [selectedOption, setSelectedOption] = useState(0);
   const [filteredWebtoons, setFilteredWebtoons] = useState([]);
   const [searchWebtoons, setSearchWebtoons] = useState([]);
+  const [keyword, setKeyword] = useState(queryParams.get("keyword"));
 
   const handleOptionClick = (index) => {
     setSelectedOption(index);
@@ -33,6 +33,7 @@ const WebtoonSearchList = ({}) => {
 
         setFilteredWebtoons(filteredWebtoons);
         setSearchWebtoons(searchWebtoons);
+        setKeyword(keyword);
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -139,7 +140,7 @@ const WebtoonSearchList = ({}) => {
             </ResultList>
           </Result>
         </Content>
-        <WebtoonAside />
+        {/* <WebtoonAside /> */}
       </ContentWrap>
     </Container>
   );
