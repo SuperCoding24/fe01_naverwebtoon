@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
+import styled from "styled-components";
 
 const WebtoonHeader = () => {
     const navigate = useNavigate();
@@ -38,6 +38,7 @@ const WebtoonHeader = () => {
               const data = await response.json();
               console.log("data", data);
               console.log("data.webtoons: " , data.webtoons);
+            
               navigate("/search",  data.webtoons);
             } catch (error) {
                 console.log(error);
