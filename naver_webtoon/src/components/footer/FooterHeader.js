@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import arrowSvg from "../monthnewwebtoon/asset/arrow.svg";
+import arrowSvg from "../../assets/arrow.svg";
 
 const FooterHeader = () => {
   return (
