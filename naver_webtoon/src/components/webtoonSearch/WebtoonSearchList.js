@@ -8,17 +8,18 @@ import { useLocation } from "react-router-dom";
 const WebtoonSearchList = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+  const keyword = queryParams.get("keyword");
 
   const [selectedOption, setSelectedOption] = useState(0);
   const [filteredWebtoons, setFilteredWebtoons] = useState([]);
   const [searchWebtoons, setSearchWebtoons] = useState([]);
-  const [keyword, setKeyword] = useState(queryParams.get("keyword"));
 
   const handleOptionClick = (index) => {
     setSelectedOption(index);
   };
 
   useEffect(() => {
+    console.log(keyword);
     const fetchData = async () => {
       try {
         const response = await fetch(
@@ -33,13 +34,12 @@ const WebtoonSearchList = () => {
 
         setFilteredWebtoons(filteredWebtoons);
         setSearchWebtoons(searchWebtoons);
-        setKeyword(keyword);
       } catch (error) {
         console.error("Error fetching data", error);
       }
     };
     fetchData();
-  }, []);
+  }, [keyword]);
 
   return (
     <Container>
@@ -93,12 +93,13 @@ const WebtoonSearchList = () => {
 
       <ContentWrap>
         <Content>
-          <ContentHeader>
-            <TabName>웹툰</TabName>
-            <ResultCount>총 {searchWebtoons.length}</ResultCount>
-            {/* 
-            <ContentMore>웹툰 더보기 &#62;</ContentMore> */}
-          </ContentHeader>
+          <ContentHeadArea>
+            <ContentHeader>
+              <TabName>웹툰</TabName>
+              <ResultCount>총 {searchWebtoons.length}</ResultCount>
+            </ContentHeader>
+            <ContentMore src="">웹툰 더보기 &#62;</ContentMore>
+          </ContentHeadArea>
           <Result>
             <ResultList>
               {searchWebtoons.map((webtoon) => (
@@ -205,15 +206,24 @@ const Content = styled.div`
   width: 840px;
 `;
 
-// const ContentHeadArea = styled.div`
-//   display:flex;
-//   align-items:center;
-// `
+const ContentHeadArea = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(235, 235, 235);
+`;
 
 const ContentHeader = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgb(235, 235, 235);
+`;
+
+const ContentMore = styled.a`
+  align-items: center;
+  color: rgb(102, 102, 102);
+  display: flex;
+  font-size: 15px;
+  margin-left: 5px;
 `;
 
 const Result = styled.div``;
