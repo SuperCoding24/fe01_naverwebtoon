@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Helmet } from "react-helmet-async";
 
 //components
 // import WebtoonAside from "./WebtoonAside";
@@ -43,6 +44,10 @@ const WebtoonSearchList = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>검색 결과 : 네이버 웹툰</title>
+      </Helmet>
+
       <SearchKeywordArea>
         <SearchKeyword>'{keyword}'</SearchKeyword>에 대한 검색결과입니다.
       </SearchKeywordArea>
