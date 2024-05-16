@@ -38,7 +38,7 @@ const WebtoonAside = () => {
         </AsideTitleArea>
         <AsideListContent>
           <AsideListItem>
-            <PosterLink href=""></PosterLink>
+            <PosterLink src="" alt="박만사"></PosterLink>
             <AsideRankingArea>
               <AsideRanking>1</AsideRanking>
             </AsideRankingArea>
@@ -106,7 +106,7 @@ const AsideListItem = styled.li`
   text-align: left;
 `;
 
-const PosterLink = styled.div`
+const PosterLink = styled.image`
   display: block;
   text-align: left;
   text-decoration: none, solid, rgb(0, 0, 0);

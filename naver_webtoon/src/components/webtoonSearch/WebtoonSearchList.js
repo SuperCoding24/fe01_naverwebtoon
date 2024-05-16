@@ -1,107 +1,131 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 //components
 import WebtoonAside from "./WebtoonAside";
 
-const WebtoonSearchList = () => {
+const WebtoonSearchList = ({ searchWebtoons }) => {
   const [selectedOption, setSelectedOption] = useState(0);
+  const [filteredWebtoons, setFilteredWebtoons] = useState([]);
 
   const handleOptionClick = (index) => {
     setSelectedOption(index);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        //연재여부 필터
+        const filteredWebtoons = searchWebtoons.filter(
+          (webtoon) => !webtoon.updateDays.includes("finished")
+        );
+
+        setFilteredWebtoons(filteredWebtoons);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    };
+    fetchData();
+  }, [searchWebtoons]);
+
   return (
     <Container>
-      <SearchResultTitleArea>
-        <SearchResultSearchText>'금의행'</SearchResultSearchText> 에 대한
-        검색결과입니다.
-      </SearchResultTitleArea>
-      <SearchResultTabControl>
+      <SearchKeywordArea>
+        <SearchKeyword>갓오브하이스쿨</SearchKeyword> 에 대한 검색결과입니다.
+      </SearchKeywordArea>
+      <TabControl>
         <Tab
           onClick={() => handleOptionClick(0)}
           isSelected={selectedOption === 0}
         >
-          전체
+          전체({searchWebtoons.length})
         </Tab>
         <Tab
           onClick={() => handleOptionClick(1)}
           isSelected={selectedOption === 1}
         >
-          웹툰
+          웹툰({searchWebtoons.length})
         </Tab>
         <Tab
           onClick={() => handleOptionClick(2)}
           isSelected={selectedOption === 2}
         >
-          베스트도전
+          베스트도전(0)
         </Tab>
         <Tab
           onClick={() => handleOptionClick(3)}
           isSelected={selectedOption === 3}
         >
-          도전만화
+          도전만화(0)
         </Tab>
         <Tab
           onClick={() => handleOptionClick(4)}
           isSelected={selectedOption === 4}
         >
-          단행본
+          단행본(0)
         </Tab>
         <Tab
           onClick={() => handleOptionClick(5)}
           isSelected={selectedOption === 5}
         >
-          만화
+          만화(0)
         </Tab>
         <Tab
           onClick={() => handleOptionClick(6)}
           isSelected={selectedOption === 6}
         >
-          장르소설
+          장르소설(0)
         </Tab>
-      </SearchResultTabControl>
+      </TabControl>
 
       <ContentWrap>
         <Content>
-          <ComponentHeadArea>
-            <ComponentHeadTitle>웹툰</ComponentHeadTitle>
-            <ComponentHeadCount>총 2</ComponentHeadCount>
-          </ComponentHeadArea>
-          <SearchResult>
-            <SearchResultList>
-              <SearchResultListItem>
-                <Image src="" alt="시한부 기사가 되었다" />
-                <SearchResultListInfoArea>
-                  <Title>시한부 기사가 되었다.</Title>
-                  <WebtoonInfo>
-                    <Author>
-                      김두루미 <MiddleDot>&bull;</MiddleDot> 글 /
-                    </Author>
-                    <Illustrator>
-                      김문경 <MiddleDot>&bull;</MiddleDot> 그림 |
-                    </Illustrator>
-                    <Episode> 73화 완결</Episode> |
-                    <LastUpdate> 최종 업데이트</LastUpdate>
-                  </WebtoonInfo>
-                  <Summary>
-                    시한부의 삶을 살아가는 루이스 크로이드. 살기 위해서는 다른
-                    생명을 죽여야 한다. 똥 밭에서 굴러도 이승이 낫다고 했던가.
-                    또 한 번의 기회. 살아남기 위해서라면 무슨 짓이라도 할
-                    것이다.
-                  </Summary>
-                  <TagArea>
-                    <TagGroup>
-                      <Tag>#판타지</Tag>
-                      <Tag>#헌터물</Tag>
-                      <Tag>#다크판타지</Tag>
-                      <Tag>#소설원작</Tag>
-                    </TagGroup>
-                  </TagArea>
-                </SearchResultListInfoArea>
-              </SearchResultListItem>
-            </SearchResultList>
-          </SearchResult>
+          <ContentHeader>
+            <TabName>웹툰</TabName>
+            <ResultCount>총 {searchWebtoons.length}</ResultCount>
+            {/* 
+            <ContentMore>웹툰 더보기 &#62;</ContentMore> */}
+          </ContentHeader>
+          <Result>
+            <ResultList>
+              {searchWebtoons.map((webtoon) => (
+                <ResultItemBox key={webtoon._id}>
+                  <>
+                    <Image src={webtoon.img} alt={webtoon.title}></Image>
+                    <ResultItemInfo>
+                      <Title>{webtoon.title}</Title>
+                      <WebtoonInfo>
+                        <Author>
+                          {webtoon.author} <MiddleDot>&bull;</MiddleDot> 글
+                          <Sol> &#47; </Sol>
+                        </Author>
+                        <Illustrator>
+                          {webtoon.author} <MiddleDot>&bull;</MiddleDot> 그림
+                        </Illustrator>
+                        <Separator>&#10072;</Separator>
+                        <LastUpdate>
+                          {filteredWebtoons ? (
+                            <span> 연재중</span>
+                          ) : (
+                            <span> 완결</span>
+                          )}
+                        </LastUpdate>
+                      </WebtoonInfo>
+                      <Summary>{webtoon.searchKeyword}</Summary>
+                      <TagArea>
+                        <TagGroup>
+                          <Tag>#판타지</Tag>
+                          <Tag>#헌터물</Tag>
+                          <Tag>#다크판타지</Tag>
+                          <Tag>#소설원작</Tag>
+                        </TagGroup>
+                      </TagArea>
+                    </ResultItemInfo>
+                  </>
+                </ResultItemBox>
+              ))}
+            </ResultList>
+          </Result>
         </Content>
         <WebtoonAside />
       </ContentWrap>
@@ -112,38 +136,44 @@ const WebtoonSearchList = () => {
 export default WebtoonSearchList;
 
 const Container = styled.div`
-  margin-left: 20px;
-  margin-right: 20px;
+  margin: 0 auto;
+  padding: 0 25px 0 25px;
+  position: relative;
+  width: 100%;
+  max-width: 1230px;
 `;
 
-const SearchResultTitleArea = styled.h2`
-  display: flex;
+const SearchKeywordArea = styled.h2`
+  display: block;
   align-items: center;
   font-size: 20px;
-  height: 50px;
+  width: 840px;
+  height: 51px;
 `;
 
-const SearchResultSearchText = styled.strong`
+const SearchKeyword = styled.strong`
   color: rgb(0, 220, 100);
   margin-right: 5px;
 `;
 
-const SearchResultTabControl = styled.div`
+const TabControl = styled.div`
   display: flex;
   padding-bottom: 16px;
   border-bottom: 1px solid rgb(235, 235, 235);
+  width: 840px;
+  height: 51px;
 `;
 
 const Tab = styled.div`
   display: flex;
-  color: ${(props) => (props.isSelected ? "#00DC64" : "#666666")};
+  color: ${(props) => (props.isSelected ? "#00DC64" : "#000000")};
   margin-right: 20px;
   align-items: center;
   background-color: rgba(0, 0, 0, 0);
   border: 0px none rgb(0, 220, 100);
   cursor: pointer;
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 600;
   height: 50px;
   line-height: 20px;
 `;
@@ -160,33 +190,47 @@ const Content = styled.div`
   width: 840px;
 `;
 
-const ComponentHeadArea = styled.div`
+// const ContentHeadArea = styled.div`
+//   display:flex;
+//   align-items:center;
+// `
+
+const ContentHeader = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgb(235, 235, 235);
 `;
 
-const SearchResult = styled.div``;
+const Result = styled.div``;
 
-const SearchResultList = styled.ul`
+const ResultList = styled.ul`
   padding-left: 0px;
 `;
 
-const SearchResultListItem = styled.li`
+const ResultItemBox = styled.li`
   display: flex;
   align-items: start;
   column-gap: 16px;
+  margin-top: 20px;
+  width: 840px;
+  height: 156px;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  background-size: contain;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  height: 100%;
+  width: 118px;
+`;
 
-const SearchResultListInfoArea = styled.div``;
+const ResultItemInfo = styled.div``;
 
-const ComponentHeadTitle = styled.h2`
+const TabName = styled.h2`
   font-size: 20px;
 `;
 
-const ComponentHeadCount = styled.span`
+const ResultCount = styled.span`
   align-items: center;
   color: rgb(102, 102, 102);
   display: flex;
@@ -211,8 +255,6 @@ const Author = styled.span``;
 
 const Illustrator = styled.span``;
 
-const Episode = styled.span``;
-
 const LastUpdate = styled.span``;
 
 const Summary = styled.p`
@@ -222,7 +264,8 @@ const Summary = styled.p`
   text-overflow: ellipsis;
   overflow-x: hidden;
   overflow-y: hidden;
-
+  margin-top:3px;
+  height:20px
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
 `;
@@ -244,10 +287,20 @@ const Tag = styled.div`
   margin-right: 20px;
   font-size: 14px;
   font-weight: 500;
+  color: rgb(102, 102, 102);
   margin: 0 5px 0 5px;
   padding: 0 10px 10px 0;
 `;
 
 const MiddleDot = styled.span`
-  color: #b2b2b2;
+  color: #666666;
+`;
+
+const Separator = styled.span`
+  margin: 0 3px 0 3px;
+  color: #666666;
+`;
+
+const Sol = styled.span`
+  color: #666666;
 `;
