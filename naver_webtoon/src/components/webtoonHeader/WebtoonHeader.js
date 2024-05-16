@@ -17,6 +17,11 @@ const WebtoonHeader = () => {
         setKeyword(event.target.value);
     };
 
+    const submit = (event) => {
+        event.preventDefault();
+        handleSearch();
+    };
+
     const onSubmitSearch = (event) => {
         if (event.key === "Enter") {
             handleSearch()
@@ -49,8 +54,10 @@ const WebtoonHeader = () => {
                 <Webtoon onClick={webtoon}>웹툰</Webtoon>
             </WrapperLeft>
             <WrapperRight>
-                <SearchInput type="search" placeholder="제목/작가로 검색할 수 있습니다." value={keyword} onChange={getValue} onKeyPress={onSubmitSearch}/>
-                <button><FaSearch className="customSearchIcon" size={24} /></button>
+                <form onSubmit={submit}>
+                    <SearchInput type="search" placeholder="제목/작가로 검색할 수 있습니다." value={keyword} onChange={getValue} onKeyPress={onSubmitSearch}/>
+                    <button><FaSearch className="customSearchIcon" size={14} /></button>
+                </form>
             </WrapperRight>
         </Wrapper>
     );
@@ -91,7 +98,7 @@ const WrapperRight = styled.div`
     display: flex;
     width: 18vw;
     hegith: 10vh;
-    justify-content: flex-end;
+    justify-content: space-around;
     align-items: center;
     margin-left: 18vw;
     margin-bottom: 2px;
@@ -101,13 +108,9 @@ const WrapperRight = styled.div`
 const SearchInput = styled.input`
     display: inline-block;
     font-size: 10px;
-    width: 400px;
+    width: 200px;
     height: 28px;
     margin-top: 2px;
     margin-left: 50px;
     padding-left: 25px; 
-`;
-
-const searchButton = styled.button`
-    margin-top: 4px;
 `;
