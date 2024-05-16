@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import WebtoonListFilter from "./WebtoonListFilter";
-import arrowSvg from "../../asset/arrow.svg";
+import arrowSvg from "../../assets/arrow.svg";
 
 const Header = styled.div`
   display: flex;

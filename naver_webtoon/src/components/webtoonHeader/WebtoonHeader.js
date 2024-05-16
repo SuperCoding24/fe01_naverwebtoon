@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -8,13 +8,13 @@ import { FaBars } from "react-icons/fa";
 import styled from "styled-components";
 
 const WebtoonHeader = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const webtoon = () => {
-        navigate("/webtoon");
-    };
+  const webtoon = () => {
+    navigate("/webtoon");
+  };
 
-    const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState("");
 
     const getValue = (event) => {
         console.log("검색어: " , event.target.value);
@@ -43,7 +43,7 @@ const WebtoonHeader = () => {
               console.log("data", data);
               console.log("data.webtoons: " , data.webtoons);
 
-              navigate("/search",  data.webtoons);
+              navigate(`/search?keyword=${keyword}`);
             } catch (error) {
                 console.log(error);
             }
@@ -52,57 +52,65 @@ const WebtoonHeader = () => {
           fetchWebtoons();
     };
 
-    return (
-        <Wrapper>
-            <WrapperLeft>
-                <NaverHeader>NAVER</NaverHeader>
-                <Webtoon onClick={webtoon}>웹툰</Webtoon>
-            </WrapperLeft>
-            <WrapperRight>
-                <FormWrapper onSubmit={submit}>
-                    <SearchInput type="search" placeholder="제목/작가로 검색할 수 있습니다." value={keyword} onChange={getValue} onKeyPress={onSubmitSearch}/>
-                    <button><FaSearch className="customSearchIcon" size={6} /></button>
-                </FormWrapper>
-                <IconWrapper>
-                    <FaRegCircleUser size={24} />
-                    <FaRegCommentDots size={24} />
-                    <FaEnvelope size={24}/>
-                    <FaBars size={24}/>                    
-                </IconWrapper>
-            </WrapperRight>
-        </Wrapper>
-    );
+  return (
+    <Wrapper>
+      <WrapperLeft>
+        <NaverHeader>NAVER</NaverHeader>
+        <Webtoon onClick={webtoon}>웹툰</Webtoon>
+      </WrapperLeft>
+      <WrapperRight>
+        <FormWrapper onSubmit={submit}>
+          <SearchInput
+            type="search"
+            placeholder="제목/작가로 검색할 수 있습니다."
+            value={keyword}
+            onChange={getValue}
+            onKeyPress={onSubmitSearch}
+          />
+          <button>
+            <FaSearch className="customSearchIcon" size={14} />
+          </button>
+        </FormWrapper>
+        <IconWrapper>
+            <FaRegCircleUser size={24} />
+            <FaRegCommentDots size={24} />
+            <FaEnvelope size={24}/>
+            <FaBars size={24}/>                    
+        </IconWrapper>
+      </WrapperRight>
+    </Wrapper>
+  );
 };
 
 export default WebtoonHeader;
 
 const Wrapper = styled.div`
-    display: flex;
-    width: 1150px;
-    height: 6vh;
-    justify-content: space-between;
+  display: flex;
+  width: 1150px;
+  height: 6vh;
+  justify-content: space-between;
 `;
 
 const WrapperLeft = styled.div`
-    display: flex;
-    width: 40vw;
-    justify-content: space-around;
+  display: flex;
+  width: 40vw;
+  justify-content: space-around;
 `;
 
 const NaverHeader = styled.h1`
-    font-color: black;
-    font-size: 18px;
-    margin-top: 20px;
-    cursor: pointer;
+  font-color: black;
+  font-size: 18px;
+  margin-top: 20px;
+  cursor: pointer;
 `;
 
 const Webtoon = styled.div`
-    width: 1000px;
-    font-size: 26px;
-    font-weight: bold;
-    margin-top: 14px;
-    margin-left: 20px;
-    cursor: pointer;
+  width: 1000px;
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 14px;
+  margin-left: 20px;
+  cursor: pointer;
 `;
 
 const WrapperRight = styled.div`
@@ -148,11 +156,9 @@ const FormWrapper = styled.form`
 
     button {
         position: absolute;
-        margin-top: 30px;
-        margin-left: 158px;
+        margin-top: 32px;
+        margin-left: 154px;
         background: none;
         border: none;
     }
-
 `;
-
