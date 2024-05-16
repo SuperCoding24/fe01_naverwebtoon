@@ -51,7 +51,7 @@ const MonthNewWebtoonUI = () => {
   return (
     <Webtoonbox>
       <Header>
-        <Title>이달의 신규웹툰</Title>
+        <Title>이달의 신규 웹툰</Title>
         <MoreWatch onClick={moreWatchButton}>
           신작웹툰 더보기
           <MoreWatchImage src={arrowSvg} alt="화살표 이미지" />
