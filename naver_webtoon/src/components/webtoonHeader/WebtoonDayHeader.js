@@ -53,6 +53,7 @@ const DayCategoryItemAll = styled.li`
     height: 4vh;
     margin-left: -38px;
     margin-right: 30px;
+    color: green;
 `;
 
 const DayCategoryItem = styled.li`
