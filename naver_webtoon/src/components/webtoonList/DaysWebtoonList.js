@@ -159,7 +159,7 @@ const TitleBox = styled.div`
 
 const Upload = styled.div`
   padding: 1.5px;
-  margin-right: 4px;
+  margin: 0 4px 0 8px;
   font-size: 8px;
   font-weight: bold;
   color: red;
