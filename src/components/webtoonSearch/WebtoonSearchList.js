@@ -12,7 +12,7 @@ const WebtoonSearchList = () => {
   const keyword = queryParams.get("keyword");
 
   const [selectedOption, setSelectedOption] = useState(0);
-  // const [filteredWebtoons, setFilteredWebtoons] = useState([]);
+  const [filteredWebtoons, setFilteredWebtoons] = useState([]);
   const [searchWebtoons, setSearchWebtoons] = useState([]);
 
   const handleOptionClick = (index) => {
@@ -28,13 +28,12 @@ const WebtoonSearchList = () => {
         );
         const data = await response.json();
         const searchWebtoons = data.webtoons;
-        console.log(searchWebtoons);
         //연재여부 필터
-        // const filteredWebtoons = searchWebtoons.filter(
-        //   (webtoon) => !webtoon.updateDays.includes("finished")
-        // );
+        const filteredWebtoons = searchWebtoons.filter(
+          (webtoon) => !webtoon.updateDays.includes("finished")
+        );
 
-        // setFilteredWebtoons(filteredWebtoons);
+        setFilteredWebtoons(filteredWebtoons);
         setSearchWebtoons(searchWebtoons);
       } catch (error) {
         console.error("Error fetching data", error);
@@ -125,11 +124,11 @@ const WebtoonSearchList = () => {
                         </Illustrator>
                         <Separator>&#10072;</Separator>
                         <LastUpdate>
-                          {/* {filteredWebtoons ? (
+                          {filteredWebtoons ? (
                             <span> 연재중</span>
                           ) : (
                             <span> 완결</span>
-                          )} */}
+                          )}
                         </LastUpdate>
                       </WebtoonInfo>
                       {/* <Summary>{webtoon.searchKeyword}</Summary> */}
