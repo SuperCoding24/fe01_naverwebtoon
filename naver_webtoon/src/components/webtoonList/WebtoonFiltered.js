@@ -41,7 +41,7 @@ const WebtoonFiltered = ({ setWebtoons }) => {
             sortedWebtoons = data.webtoons
               .filter(
                 (webtoon) =>
-                  webtoon.additional && webtoon.additional.rest !== undefined
+                  webtoon.additional && webtoon.additional.rest === true
               )
               .sort((a, b) =>
                 sortOrder === "desc"
@@ -52,17 +52,6 @@ const WebtoonFiltered = ({ setWebtoons }) => {
           default:
             sortedWebtoons = data.webtoons;
         }
-
-        // Sort rest (휴재) true values to the bottom
-        sortedWebtoons.sort((a, b) => {
-          if (a.additional.rest === true && b.additional.rest === false) {
-            return 1;
-          }
-          if (a.additional.rest === false && b.additional.rest === true) {
-            return -1;
-          }
-          return 0;
-        });
 
         console.log("Sorted webtoons:", sortedWebtoons);
         setWebtoons(sortedWebtoons);

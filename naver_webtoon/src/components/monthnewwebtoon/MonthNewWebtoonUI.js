@@ -3,6 +3,28 @@ import styled from "styled-components";
 import WebtoonListFilter from "./WebtoonListFilter";
 import arrowSvg from "../../assets/arrow.svg";
 
+const MonthNewWebtoonUI = () => {
+  const moreWatchButton = () => {
+    console.log("신작웹툰 더보기 버튼 클릭");
+  };
+
+  return (
+    <Webtoonbox>
+      <Header>
+        <Title>이달의 신규웹툰</Title>
+        <MoreWatch onClick={moreWatchButton}>
+          신작웹툰 더보기
+          <MoreWatchImage src={arrowSvg} alt="화살표 이미지" />
+        </MoreWatch>
+      </Header>
+
+      <WebtoonListFilter />
+    </Webtoonbox>
+  );
+};
+
+export default MonthNewWebtoonUI;
+
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -45,25 +67,3 @@ const MoreWatchImage = styled.img`
   height: 18px;
   margin-right: 12px;
 `;
-
-const MonthNewWebtoonUI = () => {
-  const moreWatchButton = () => {
-    console.log("신작웹툰 더보기 버튼 클릭");
-  };
-
-  return (
-    <Webtoonbox>
-      <Header>
-        <Title>이달의 신규웹툰</Title>
-        <MoreWatch onClick={moreWatchButton}>
-          신작웹툰 더보기
-          <MoreWatchImage src={arrowSvg} alt="화살표 이미지" />
-        </MoreWatch>
-      </Header>
-
-      <WebtoonListFilter />
-    </Webtoonbox>
-  );
-};
-
-export default MonthNewWebtoonUI;

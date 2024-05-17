@@ -1,70 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const WebtoonListContainer = styled.div`
-  display: flex;
-  overflow-x: auto;
-`;
-
-const BoxContainer = styled.div`
-  width: 275px;
-  border: none;
-  margin: 0 24px 20px 0;
-  position: relative;
-`;
-
-const TitleLink = styled.a`
-  text-decoration: none;
-  padding: 0;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 20px;
-  text-align: left;
-  color: #1f1810;
-  word-break: break-word;
-`;
-
-const AuthorLink = styled.a`
-  font-size: 13px;
-  line-height: 20px;
-  font-weight: 500;
-  color: #1a1a1a;
-  text-decoration: none;
-  padding: 0;
-  cursor: pointer;
-`;
-
-const WebtoonImage = styled.img`
-  width: 282px;
-  height: 350px;
-  object-fit: cover;
-  cursor: pointer;
-  border-radius: 5px;
-`;
-
-const NewIcon = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 30px;
-  height: 30px;
-  background-color: #00dc64;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #002110;
-  font-family: Pretendard, Helvetica, -apple-system, BlinkMacSystemFont,
-    "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", "돋움", Dotum,
-    sans-serif;
-  font-size: 12px;
-  font-weight: 1000;
-  margin: 7px 0 0 7px;
-`;
-
 const TruncateText = ({ text, maxLength }) => {
   if (text.length <= maxLength) {
     return text;
@@ -158,3 +94,67 @@ const WebtoonListFilter = () => {
 };
 
 export default WebtoonListFilter;
+
+const WebtoonListContainer = styled.div`
+  display: flex;
+  overflow-x: auto;
+`;
+
+const BoxContainer = styled.div`
+  width: 275px;
+  border: none;
+  margin: 0 24px 20px 0;
+  position: relative;
+`;
+
+const TitleLink = styled.a`
+  text-decoration: none;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+  color: #1f1810;
+  word-break: break-word;
+`;
+
+const AuthorLink = styled.a`
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #1a1a1a;
+  text-decoration: none;
+  padding: 0;
+  cursor: pointer;
+`;
+
+const WebtoonImage = styled.img`
+  width: 282px;
+  height: 350px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 5px;
+`;
+
+const NewIcon = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background-color: #00dc64;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #002110;
+  font-family: Pretendard, Helvetica, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", "돋움", Dotum,
+    sans-serif;
+  font-size: 12px;
+  font-weight: 1000;
+  margin: 7px 0 0 7px;
+`;
