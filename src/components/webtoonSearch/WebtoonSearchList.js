@@ -15,7 +15,7 @@ const WebtoonSearchList = () => {
   const [filteredWebtoons, setFilteredWebtoons] = useState([]);
   const [searchWebtoons, setSearchWebtoons] = useState([]);
 
-  const handleOptionClick = index => {
+  const handleOptionClick = (index) => {
     setSelectedOption(index);
   };
 
@@ -24,13 +24,13 @@ const WebtoonSearchList = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API}/search?keyword=${keyword}`
+          `${process.env.REACT_APP_API}search?keyword=${keyword}`
         );
         const data = await response.json();
         const searchWebtoons = data.webtoons;
         //연재여부 필터
         const filteredWebtoons = searchWebtoons.filter(
-          webtoon => !webtoon.updateDays.includes("finished")
+          (webtoon) => !webtoon.updateDays.includes("finished")
         );
 
         setFilteredWebtoons(filteredWebtoons);
@@ -106,7 +106,7 @@ const WebtoonSearchList = () => {
           </ContentHeadArea>
           <Result>
             <ResultList>
-              {searchWebtoons.map(webtoon => (
+              {searchWebtoons.map((webtoon) => (
                 <ResultItemBox key={webtoon._id}>
                   <>
                     <ImageBox>
@@ -180,15 +180,15 @@ const SearchKeyword = styled.strong`
 const TabControl = styled.div`
   display: flex;
   width: 840px;
-  border-bottom: ${props => props.theme.borderColor};
+  border-bottom: ${(props) => props.theme.borderColor};
 `;
 
 const Tab = styled.div`
   display: flex;
-  color: ${props => (props.isSelected ? "#00DC64" : "")};
+  color: ${(props) => (props.isSelected ? "#00DC64" : "")};
   margin-right: 20px;
   align-items: center;
-  border-bottom: ${props => (props.isSelected ? "2px solid #00DC64" : "")};
+  border-bottom: ${(props) => (props.isSelected ? "2px solid #00DC64" : "")};
   cursor: pointer;
   font-size: 15px;
   font-weight: 600;
@@ -213,7 +213,7 @@ const ContentHeadArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: ${props => props.theme.borderColor};
+  border-bottom: ${(props) => props.theme.borderColor};
 `;
 
 const ContentHeader = styled.div`
