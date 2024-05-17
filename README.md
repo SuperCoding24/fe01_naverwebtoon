@@ -1,7 +1,11 @@
 # NAVER Webtoon Clone Coding
 fe01 1차 프로젝트_네이버 웹툰 클론코딩
 >super coding 1차 프로젝트 자주 사용하는 서비스 clone coding [배포 URL](https://naver-webtoon.vercel.app/)
-https://github.com/SuperCoding24/fe01_naverwebtoon/assets/101804857/9f459e2e-0942-426c-92ce-804e4d892188
+
+
+https://github.com/SuperCoding24/fe01_naverwebtoon/assets/101804857/6fa1c866-3d11-4613-9b25-52e1524c4fac
+
+
 
 
 <br/>
