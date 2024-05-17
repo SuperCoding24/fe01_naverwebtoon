@@ -16,17 +16,14 @@ const Header = styled.div`
 `;
 
 const Webtoonbox = styled.div`
-  width: 1197px;
+  width: 1180px;
   height: 331px;
   padding-top: 15px;
 `;
 
 const Title = styled.div`
   font-size: 20px;
-  line-height: 21px;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-  color: #000005;
+  font-weight: bolder;
 `;
 
 const MoreWatch = styled.div`
@@ -34,8 +31,8 @@ const MoreWatch = styled.div`
   align-items: center;
   font-size: 15px;
   line-height: 21px;
-  font-weight: 500;
-  color: #666;
+  font-weight: bold;
+  color: ${props => props.theme.boldGrayFontColor};
   cursor: pointer;
 `;
 
@@ -54,7 +51,7 @@ const MonthNewWebtoonUI = () => {
   return (
     <Webtoonbox>
       <Header>
-        <Title>이달의 신규웹툰</Title>
+        <Title>이달의 신규 웹툰</Title>
         <MoreWatch onClick={moreWatchButton}>
           신작웹툰 더보기
           <MoreWatchImage src={arrowSvg} alt="화살표 이미지" />

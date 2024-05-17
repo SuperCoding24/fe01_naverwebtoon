@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Helmet } from "react-helmet-async";
 
 //components
 // import WebtoonAside from "./WebtoonAside";
@@ -14,7 +15,7 @@ const WebtoonSearchList = () => {
   const [filteredWebtoons, setFilteredWebtoons] = useState([]);
   const [searchWebtoons, setSearchWebtoons] = useState([]);
 
-  const handleOptionClick = (index) => {
+  const handleOptionClick = index => {
     setSelectedOption(index);
   };
 
@@ -29,7 +30,7 @@ const WebtoonSearchList = () => {
         const searchWebtoons = data.webtoons;
         //연재여부 필터
         const filteredWebtoons = searchWebtoons.filter(
-          (webtoon) => !webtoon.updateDays.includes("finished")
+          webtoon => !webtoon.updateDays.includes("finished")
         );
 
         setFilteredWebtoons(filteredWebtoons);
@@ -43,8 +44,12 @@ const WebtoonSearchList = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>검색 결과 : 네이버 웹툰</title>
+      </Helmet>
+
       <SearchKeywordArea>
-        <SearchKeyword>{keyword}</SearchKeyword> 에 대한 검색결과입니다.
+        <SearchKeyword>'{keyword}'</SearchKeyword>에 대한 검색결과입니다.
       </SearchKeywordArea>
       <TabControl>
         <Tab
@@ -98,11 +103,10 @@ const WebtoonSearchList = () => {
               <TabName>웹툰</TabName>
               <ResultCount>총 {searchWebtoons.length}</ResultCount>
             </ContentHeader>
-            <ContentMore src="">웹툰 더보기 &#62;</ContentMore>
           </ContentHeadArea>
           <Result>
             <ResultList>
-              {searchWebtoons.map((webtoon) => (
+              {searchWebtoons.map(webtoon => (
                 <ResultItemBox key={webtoon._id}>
                   <>
                     <ImageBox>
@@ -127,7 +131,7 @@ const WebtoonSearchList = () => {
                           )}
                         </LastUpdate>
                       </WebtoonInfo>
-                      <Summary>{webtoon.searchKeyword}</Summary>
+                      {/* <Summary>{webtoon.searchKeyword}</Summary> */}
                       <TagArea>
                         <TagGroup>
                           <Tag>#판타지</Tag>
@@ -152,8 +156,8 @@ const WebtoonSearchList = () => {
 export default WebtoonSearchList;
 
 const Container = styled.div`
-  margin: 0 auto;
-  padding: 0 25px 0 25px;
+  margin-bottom: 100px;
+  padding-top: 30px;
   position: relative;
   width: 100%;
   max-width: 1230px;
@@ -164,7 +168,8 @@ const SearchKeywordArea = styled.h2`
   align-items: center;
   font-size: 20px;
   width: 840px;
-  height: 51px;
+  height: 38px;
+  font-weight: bold;
 `;
 
 const SearchKeyword = styled.strong`
@@ -174,24 +179,22 @@ const SearchKeyword = styled.strong`
 
 const TabControl = styled.div`
   display: flex;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgb(235, 235, 235);
   width: 840px;
-  height: 51px;
+  border-bottom: ${props => props.theme.borderColor};
 `;
 
 const Tab = styled.div`
   display: flex;
-  color: ${(props) => (props.isSelected ? "#00DC64" : "#000000")};
+  color: ${props => (props.isSelected ? "#00DC64" : "")};
   margin-right: 20px;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0);
-  border: 0px none rgb(0, 220, 100);
+  border-bottom: ${props => (props.isSelected ? "2px solid #00DC64" : "")};
   cursor: pointer;
   font-size: 15px;
   font-weight: 600;
   height: 50px;
   line-height: 20px;
+  font-weight: bold;
 `;
 
 const ContentWrap = styled.div`
@@ -210,20 +213,14 @@ const ContentHeadArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgb(235, 235, 235);
+  border-bottom: ${props => props.theme.borderColor};
 `;
 
 const ContentHeader = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const ContentMore = styled.a`
-  align-items: center;
-  color: rgb(102, 102, 102);
-  display: flex;
-  font-size: 15px;
-  margin-left: 5px;
+  height: 40px;
+  font-weight: bold;
 `;
 
 const Result = styled.div``;
@@ -276,23 +273,31 @@ const ResultCount = styled.span`
 `;
 
 const Title = styled.div`
+  margin-bottom: 5px;
   cursor: pointer;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: bold;
   line-height: 25px;
   text-align: left;
+  color: rgb(0, 220, 100);
 `;
 
 const WebtoonInfo = styled.div`
-  font-size: 15px;
-  color: rgb(102, 102, 102);
+  font-size: 14px;
 `;
 
-const Author = styled.span``;
+const Author = styled.span`
+  font-weight: bold;
+`;
 
-const Illustrator = styled.span``;
+const Illustrator = styled.span`
+  font-weight: bold;
+`;
 
-const LastUpdate = styled.span``;
+const LastUpdate = styled.span`
+  font-weight: bold;
+  color: rgb(102, 102, 102);
+`;
 
 const Summary = styled.p`
   font-size: 15px;
@@ -319,14 +324,14 @@ const TagGroup = styled.div`
 `;
 
 const Tag = styled.div`
+  padding: 7px 10px;
   border-radius: 4px;
   background-color: rgb(246, 246, 246);
-  margin-right: 20px;
+  margin-right: 10px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: bold;
   color: rgb(102, 102, 102);
-  margin: 0 5px 0 5px;
-  padding: 0 10px 10px 0;
+  cursor: pointer;
 `;
 
 const MiddleDot = styled.span`

@@ -3,13 +3,14 @@ import styled from "styled-components";
 
 const WebtoonListContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   overflow-x: auto;
 `;
 
 const BoxContainer = styled.div`
-  width: 275px;
   border: none;
-  margin: 0 24px 20px 0;
+  margin-bottom: 20px;
+  /* margin: 0 24px 20px 0; */
   position: relative;
 `;
 
@@ -38,8 +39,10 @@ const AuthorLink = styled.a`
 `;
 
 const WebtoonImage = styled.img`
-  width: 282px;
-  height: 350px;
+  margin-bottom: 5px;
+  height: 285px;
+  border-radius: 5px;
+  border: ${props => props.theme.borderColor};
   object-fit: cover;
   cursor: pointer;
   border-radius: 5px;
@@ -65,12 +68,24 @@ const NewIcon = styled.div`
   margin: 7px 0 0 7px;
 `;
 
-const TruncateText = ({ text, maxLength }) => {
-  if (text.length <= maxLength) {
-    return text;
+const TruncateText = styled.div`
+  font-size: 15px;
+  font-weight: bold;
+  color: ${props => props.theme.fontColor};
+
+  &.author {
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: 600;
   }
-  return text.slice(0, maxLength) + "...";
-};
+`;
+
+// const TruncateText = ({ text, maxLength }) => {
+//   if (text.length <= maxLength) {
+//     return text;
+//   }
+//   return text.slice(0, maxLength) + "...";
+// };
 
 const WebtoonListFilter = () => {
   const [webtoons, setWebtoons] = useState([]);
@@ -88,11 +103,11 @@ const WebtoonListFilter = () => {
         const data = await response.json();
 
         const newWebtoons = data.webtoons.filter(
-          (webtoon) => webtoon.additional && webtoon.additional.new === true
+          webtoon => webtoon.additional && webtoon.additional.new === true
         );
 
         const shuffledNewWebtoons = shuffleArray(newWebtoons);
-        const latestNewWebtoons = shuffledNewWebtoons.slice(0, 4);
+        const latestNewWebtoons = shuffledNewWebtoons.slice(0, 5);
 
         setWebtoons(latestNewWebtoons);
         setLoading(false);
@@ -106,7 +121,7 @@ const WebtoonListFilter = () => {
     fetchWebtoons();
   }, []);
 
-  const shuffleArray = (array) => {
+  const shuffleArray = array => {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -120,7 +135,7 @@ const WebtoonListFilter = () => {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        webtoons.map((webtoon) => (
+        webtoons.map(webtoon => (
           <BoxContainer key={webtoon._id}>
             <NewIcon>신작</NewIcon>
             <div>
@@ -138,7 +153,7 @@ const WebtoonListFilter = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <TruncateText text={webtoon.title} maxLength={25} />
+                <TruncateText>{webtoon.title}</TruncateText>
               </TitleLink>
             </div>
             <div>
@@ -147,7 +162,7 @@ const WebtoonListFilter = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <TruncateText text={webtoon.author} maxLength={15} />
+                <TruncateText className="author">{webtoon.author}</TruncateText>
               </AuthorLink>
             </div>
           </BoxContainer>

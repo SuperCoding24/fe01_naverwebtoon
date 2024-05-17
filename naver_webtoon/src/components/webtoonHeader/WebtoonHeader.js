@@ -11,52 +11,52 @@ const WebtoonHeader = () => {
   const navigate = useNavigate();
 
   const webtoon = () => {
-    navigate("/webtoon");
+    navigate("/");
   };
 
   const [keyword, setKeyword] = useState("");
 
-    const getValue = (event) => {
-        console.log("검색어: " , event.target.value);
-        setKeyword(event.target.value);
+  const getValue = event => {
+    setKeyword(event.target.value);
+  };
+
+  const submit = event => {
+    event.preventDefault();
+    handleSearch();
+  };
+
+  const onSubmitSearch = event => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  const handleSearch = () => {
+    const fetchWebtoons = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API}/search?keyword=${keyword}`
+        );
+        await response.json();
+
+        navigate(`/search?keyword=${keyword}`);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    const submit = (event) => {
-        event.preventDefault();
-        handleSearch();
-    };
-
-    const onSubmitSearch = (event) => {
-        if (event.key === "Enter") {
-            handleSearch()
-            console.log(event);
-        };
-    };
-
-    const handleSearch = () => {
-        const fetchWebtoons = async () => {
-            try {
-              const response = await fetch(
-                `${process.env.REACT_APP_API}/search?keyword=${keyword}`
-              );
-              const data = await response.json();
-              console.log("data", data);
-              console.log("data.webtoons: " , data.webtoons);
-
-              navigate(`/search?keyword=${keyword}`);
-            } catch (error) {
-                console.log(error);
-            }
-          };
-
-          fetchWebtoons();
-    };
+    fetchWebtoons();
+  };
 
   return (
     <Wrapper>
       <WrapperLeft>
         <NaverHeader>NAVER</NaverHeader>
-        <Webtoon onClick={webtoon}>웹툰</Webtoon>
+        <HeaderText className="webtoon" onClick={webtoon}>
+          웹툰
+        </HeaderText>
+        <HeaderText>웹소설</HeaderText>
+        <HeaderText>시리즈</HeaderText>
       </WrapperLeft>
       <WrapperRight>
         <FormWrapper onSubmit={submit}>
@@ -67,15 +67,30 @@ const WebtoonHeader = () => {
             onChange={getValue}
             onKeyPress={onSubmitSearch}
           />
-          <button>
-            <FaSearch className="customSearchIcon" size={10} />
-          </button>
+          {/* <button>
+            <FaSearch
+              className="customSearchIcon"
+              size={18}
+              color={"#666666"}
+            />
+          </button> */}
         </FormWrapper>
         <IconWrapper>
-            <FaRegCircleUser size={24} />
-            <FaRegCommentDots size={24} />
-            <FaEnvelope size={24}/>
-            <FaBars size={24}/>                    
+          <Icon className="user-icon">
+            <FaRegCircleUser size={24} color={"#666666"} />
+          </Icon>
+          <Icon>
+            <UserName>FE01</UserName>
+          </Icon>
+          <Icon>
+            <FaRegCommentDots size={20} color={"#666666"} />
+          </Icon>
+          <Icon>
+            <FaEnvelope size={20} color={"#666666"} />
+          </Icon>
+          <Icon>
+            <FaBars size={20} color={"#666666"} />
+          </Icon>
         </IconWrapper>
       </WrapperRight>
     </Wrapper>
@@ -86,80 +101,78 @@ export default WebtoonHeader;
 
 const Wrapper = styled.div`
   display: flex;
-  width: 1150px;
-  height: 6vh;
+  align-items: center;
   justify-content: space-between;
+  width: 1180px;
+  height: 8vh;
+  border-bottom: ${props => props.theme.borderColor};
 `;
 
 const WrapperLeft = styled.div`
   display: flex;
-  width: 40vw;
-  justify-content: space-around;
+  align-items: center;
 `;
 
 const NaverHeader = styled.h1`
-  font-color: black;
+  margin-right: 10px;
   font-size: 18px;
-  margin-top: 20px;
+  font-weight: bold;
   cursor: pointer;
 `;
 
-const Webtoon = styled.div`
-  width: 1000px;
-  font-size: 26px;
-  font-weight: bold;
-  margin-top: 14px;
-  margin-left: 20px;
+const HeaderText = styled.div`
+  padding: 0 10px;
+  border-left: ${props => props.theme.borderColor};
+  color: #bbbbbb;
+  font-size: 18px;
   cursor: pointer;
+
+  &.webtoon {
+    padding-left: 0;
+    border: none;
+    color: ${props => props.theme.fontColor};
+    font-size: 24px;
+    font-weight: bold;
+  }
 `;
 
 const WrapperRight = styled.div`
-    position: relative;
-    display: flex;
-    width: 24vw;
-    hegith: 10vh;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: 9vw;
-    margin-bottom: 2px;
-`;
-
-const SearchInput = styled.input`
-    width: 600px;
-    font-size: 6px;
-    height: 28px;
-    margin-top: 26px;
-    margin-left: 58px;
-    border: 1px solid gray;   
-`;
-
-const IconWrapper = styled.div`
-    margin-top: 42px;
-    display: flex;
-    gap: 14px;
-    width: 10vw;
-    height: 6vh;
+  display: flex;
 `;
 
 const FormWrapper = styled.form`
-    position: relative;
-    
-    display: flex;
-    width: 12vw;
-    hegith: 4vh;
+  position: relative;
+  display: flex;
 
-    SearchInput {
-        border: none;
-        padding: 0 15px;
-        height: 40px;
-        width: 20vw;
-    }
+  button {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 218px;
+    background: none;
+    border: none;
+  }
+`;
 
-    button {
-        position: absolute;
-        margin-top: 32px;
-        margin-left: 143px;
-        background: none;
-        border: none;
-    }
+const SearchInput = styled.input`
+  padding: 10px;
+  width: 250px;
+  border: ${props => props.theme.borderColor};
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Icon = styled.div`
+  margin: 0 7px;
+  cursor: pointer;
+
+  &.user-icon {
+    margin-left: 25px;
+  }
+`;
+
+const UserName = styled.div`
+  font-size: 14px;
 `;

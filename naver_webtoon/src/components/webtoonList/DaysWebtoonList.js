@@ -37,7 +37,7 @@ const DaysWebtoonList = () => {
   };
 
   return (
-    <ListContainer>
+    <>
       <Header>
         <Title>요일별 전체 웹툰</Title>
         <WebtoonFiltered setWebtoons={setFilteredWebtoons} />{" "}
@@ -71,18 +71,16 @@ const DaysWebtoonList = () => {
           </ListItems>
         ))}
       </ListWrapper>
-    </ListContainer>
+    </>
   );
 };
 
 export default DaysWebtoonList;
 
-const ListContainer = styled.div``;
-
 const Header = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 200px;
+  margin-top: 130px;
 `;
 
 const Title = styled.div`
@@ -102,8 +100,9 @@ const ListWrapper = styled.div`
 const ListItems = styled.div`
   width: 14.2%;
   border-right: ${props => props.theme.borderColor};
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.day === props.currentDay ? "#DAF8E1" : ""};
+
   &:last-child {
     border: none;
   }
@@ -144,6 +143,7 @@ const Image = styled.img`
   object-fit: cover;
   transform: scale(1);
   transition-duration: 0.3s;
+
   &:hover {
     transform: scale(1.05, 1.05);
     transition-duration: 0.5s;
@@ -154,12 +154,12 @@ const TitleBox = styled.div`
   display: flex;
   align-items: center;
   margin-right: auto;
-  margin-left: 5px;
+  margin: 0 5px;
 `;
 
 const Upload = styled.div`
   padding: 1.5px;
-  margin-right: 4px;
+  margin: 0 4px 0 8px;
   font-size: 8px;
   font-weight: bold;
   color: red;
@@ -168,12 +168,13 @@ const Upload = styled.div`
 `;
 
 const WebtoonTitle = styled.div`
-  width: 170px;
+  width: 146px;
   font-weight: 700;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   word-break: break-all;
+
   &:hover {
     text-decoration: underline;
   }
