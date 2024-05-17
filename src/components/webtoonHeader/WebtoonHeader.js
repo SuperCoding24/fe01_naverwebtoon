@@ -35,7 +35,7 @@ const WebtoonHeader = () => {
     const fetchWebtoons = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API}/search?keyword=${keyword}`
+          `${process.env.REACT_APP_API}search?keyword=${keyword}`
         );
         await response.json();
 
